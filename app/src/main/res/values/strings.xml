@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MoneyManager</string>
+    <string name="money_manager">Money Manager</string>
+    <string name="slogan">Control your life</string>
 </resources>

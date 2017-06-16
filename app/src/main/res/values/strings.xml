@@ -2,4 +2,6 @@
     <string name="app_name">MoneyManager</string>
     <string name="money_manager">Money Manager</string>
     <string name="slogan">Control your life</string>
+    <string name="sliding_menu_opened">Sliding menu opened</string>
+    <string name="sliding_menu_closed">Sliding menu closed</string>
 </resources>

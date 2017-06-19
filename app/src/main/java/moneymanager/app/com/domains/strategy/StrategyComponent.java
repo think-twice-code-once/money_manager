@@ -1,4 +1,4 @@
-package moneymanager.app.com.domains.suggestion;
+package moneymanager.app.com.domains.strategy;
 
 import dagger.Component;
 
@@ -7,5 +7,5 @@ import dagger.Component;
  */
 
 @Component
-public interface SuggestionComponent {
+public interface StrategyComponent {
 }

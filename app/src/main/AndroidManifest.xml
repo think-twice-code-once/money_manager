@@ -3,6 +3,7 @@
     package="moneymanager.app.com">
 
     <application
+        android:name=".factory.MainApplication_"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

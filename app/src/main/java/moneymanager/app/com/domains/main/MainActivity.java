@@ -25,7 +25,7 @@ import moneymanager.app.com.domains.about.AboutFragment_;
 import moneymanager.app.com.domains.category.CategoryFragment_;
 import moneymanager.app.com.domains.home.HomeFragment_;
 import moneymanager.app.com.domains.report.ReportFragment_;
-import moneymanager.app.com.domains.suggestion.SuggestionFragment_;
+import moneymanager.app.com.domains.strategy.StrategyFragment_;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
@@ -93,19 +93,19 @@ public class MainActivity extends AppCompatActivity {
         titles.add(getString(R.string.category));
         screens.add(new ReportFragment_());
         titles.add(getString(R.string.report));
-        screens.add(new SuggestionFragment_());
-        titles.add(getString(R.string.suggestion));
+        screens.add(new StrategyFragment_());
+        titles.add(getString(R.string.strategy));
         screens.add(new AboutFragment_());
         titles.add(getString(R.string.about));
     }
 
     private void initOptionsForSlidingMenu() {
         List<Option> options = new ArrayList<>();
-        options.add(new Option(R.mipmap.ic_launcher, titles.get(0), getString(R.string.home_detail)));
-        options.add(new Option(R.mipmap.ic_launcher, titles.get(1), getString(R.string.category_detail)));
-        options.add(new Option(R.mipmap.ic_launcher, titles.get(2), getString(R.string.report_detail)));
-        options.add(new Option(R.mipmap.ic_launcher, titles.get(3), getString(R.string.suggestion_detail)));
-        options.add(new Option(R.mipmap.ic_launcher, titles.get(4), getString(R.string.about_detail)));
+        options.add(new Option(R.drawable.ic_home, titles.get(0), getString(R.string.home_detail), true));
+        options.add(new Option(R.drawable.ic_category, titles.get(1), getString(R.string.category_detail), false));
+        options.add(new Option(R.drawable.ic_report, titles.get(2), getString(R.string.report_detail), false));
+        options.add(new Option(R.drawable.ic_strategy, titles.get(3), getString(R.string.strategy_detail), true));
+        options.add(new Option(R.drawable.ic_about, titles.get(4), getString(R.string.about_detail), false));
 
         OptionAdapter optionAdapter = new OptionAdapter(getApplicationContext(),
                 R.layout.item_option, options);

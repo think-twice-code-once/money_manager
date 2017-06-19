@@ -9,11 +9,13 @@ public class Option {
     private int iconResId;
     private String title;
     private String detail;
+    private boolean hasSeparator;
 
-    public Option(int iconResId, String title, String detail) {
+    public Option(int iconResId, String title, String detail, boolean hasSeparator) {
         this.iconResId = iconResId;
         this.title = title;
         this.detail = detail;
+        this.hasSeparator = hasSeparator;
     }
 
     public int getIconResId() {
@@ -38,5 +40,13 @@ public class Option {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public void setHasSeparator(boolean hasSeparator) {
+        this.hasSeparator = hasSeparator;
+    }
+
+    public boolean hasSeparator() {
+        return hasSeparator;
     }
 }

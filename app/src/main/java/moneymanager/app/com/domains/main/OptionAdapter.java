@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +50,8 @@ public class OptionAdapter extends ArrayAdapter<Option> {
                     .findViewById(R.id.item_option_tv_title);
             optionViewHolder.tvDetail = (TextView) convertView.
                     findViewById(R.id.item_option_tv_detail);
+            optionViewHolder.vSeparator = convertView.
+                    findViewById(R.id.item_option_v_separator);
 
             convertView.setTag(optionViewHolder);
 
@@ -62,6 +63,7 @@ public class OptionAdapter extends ArrayAdapter<Option> {
         optionViewHolder.ivOption.setImageResource(option.getIconResId());
         optionViewHolder.tvTitle.setText(option.getTitle());
         optionViewHolder.tvDetail.setText(option.getDetail());
+        optionViewHolder.vSeparator.setVisibility(option.hasSeparator() ? View.VISIBLE : View.GONE);
 
         return convertView;
     }
@@ -70,5 +72,6 @@ public class OptionAdapter extends ArrayAdapter<Option> {
         ImageView ivOption;
         TextView tvTitle;
         TextView tvDetail;
+        View vSeparator;
     }
 }

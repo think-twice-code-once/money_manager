@@ -2,8 +2,13 @@
 <resources>
     <color name="colorPrimary">#42c662</color>
     <color name="colorPrimaryDark">#3cac57</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="white">#fff</color>
+    <color name="colorPrimaryDarkOpacity">#303cac57</color>
+    <color name="colorPrimaryOpacity">#aa42c662</color>
+    <color name="colorAccent">#fff</color>
+    <color name="white">#ffffff</color>
     <color name="transparent">#00000000</color>
     <color name="grey">#66aaaaaa</color>
+    <color name="grey_opacity">#50d4d4d4</color>
+    <color name="orange">#f66700</color>
+    <color name="orange_dark">#c35200</color>
 </resources>

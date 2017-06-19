@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:padding="10dp"
     android:orientation="horizontal"
-    tools:ignore="HardcodedText" >
+    tools:ignore="HardcodedText"
+    android:background="@drawable/selector_option">
 
     <ImageView
         android:id="@+id/item_option_iv_option"

@@ -5,7 +5,7 @@
     android:id="@+id/activity_main_dl_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="moneymanager.app.com.MainActivity">
+    tools:context="moneymanager.app.com.domains.main.MainActivity">
 
     <FrameLayout
         android:id="@+id/activity_main_fl_main_content"
@@ -18,13 +18,13 @@
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#66abcabc">
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/activity_main_ll_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#44123123"
+            android:background="@color/colorPrimary"
             android:orientation="horizontal"
             android:padding="10dp">
 

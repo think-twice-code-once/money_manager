@@ -1,10 +1,10 @@
-package moneymanager.app.com;
+package moneymanager.app.com.domains.main;
 
 import android.content.Context;
-import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+
+import moneymanager.app.com.R;
 
 /**
  * -> Created by Think-Twice-Code-Once on 6/16/2017.

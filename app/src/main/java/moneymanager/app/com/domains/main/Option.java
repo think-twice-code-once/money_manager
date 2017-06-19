@@ -1,4 +1,4 @@
-package moneymanager.app.com;
+package moneymanager.app.com.domains.main;
 
 /**
  * -> Created by Think-Twice-Code-Once on 6/16/2017.

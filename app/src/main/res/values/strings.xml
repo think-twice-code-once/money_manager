@@ -15,4 +15,8 @@
     <string name="strategy_detail">Manage money by your strategy</string>
     <string name="about_detail">More information</string>
     <string name="balance">Balance</string>
+    <string name="empty_history_prompt">The history will appear here</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

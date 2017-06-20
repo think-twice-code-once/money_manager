@@ -11,8 +11,5 @@ import moneymanager.app.com.factory.ApplicationComponent;
 @ActivityScope
 @Component(dependencies = ApplicationComponent.class)
 public interface HomeComponent {
-
-    HomePresenter homePresenter();
-
     void inject(HomeFragment homeFragment);
 }

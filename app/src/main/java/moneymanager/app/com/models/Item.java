@@ -14,8 +14,11 @@ public class Item extends RealmObject {
     @PrimaryKey
     private String id;
 
-    private long value;
+    private float value;
     private Category category;
+    private long createdAt;
+    private String detail;
+    private String itemType;
 
     public String getId() {
         return id;
@@ -25,11 +28,11 @@ public class Item extends RealmObject {
         this.id = id;
     }
 
-    public long getValue() {
+    public float getValue() {
         return value;
     }
 
-    public void setValue(long value) {
+    public void setValue(float value) {
         this.value = value;
     }
 
@@ -39,5 +42,29 @@ public class Item extends RealmObject {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(long createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public String getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
     }
 }

@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="256 000"
+            android:text="0"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"/>
@@ -43,7 +43,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pay: 10 000 000 000"
+                android:text="Pay: 0"
                 android:textColor="@color/orange"
                 android:textSize="12sp"
                 android:layout_gravity="center_horizontal"
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Earn: 10 000 000 000"
+                android:text="Earn: 0"
                 android:textColor="@color/colorPrimary"
                 android:layout_gravity="center_horizontal"
                 android:textSize="12sp"
@@ -70,7 +70,7 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/fragment_home_fab_add"
@@ -78,10 +78,29 @@
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:background="@color/grey_opacity">
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/rect_grey_border">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_home_rv_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:useCompatPadding="true"
+            android:scrollbars="vertical"/>
 
-    </android.support.v7.widget.RecyclerView>
+        <TextView
+            android:id="@+id/fragment_home_tv_history_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_opacity"
+            android:text="@string/empty_history_prompt"
+            android:layout_gravity="center"
+            android:textSize="15sp"/>
+
+    </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fragment_home_fab_add"

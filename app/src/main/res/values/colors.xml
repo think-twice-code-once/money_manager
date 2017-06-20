@@ -8,7 +8,10 @@
     <color name="white">#ffffff</color>
     <color name="transparent">#00000000</color>
     <color name="grey">#66aaaaaa</color>
-    <color name="grey_opacity">#50d4d4d4</color>
+    <color name="grey_opacity">#80e8e8e8</color>
     <color name="orange">#f66700</color>
+    <color name="orange_opacity">#aaf66700</color>
     <color name="orange_dark">#c35200</color>
+    <color name="black">#000000</color>
+    <color name="black_opacity">#88000000</color>
 </resources>

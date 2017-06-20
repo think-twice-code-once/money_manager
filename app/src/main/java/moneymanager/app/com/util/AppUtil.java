@@ -1,5 +1,8 @@
 package moneymanager.app.com.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -17,5 +20,12 @@ public class AppUtil {
                 .replace("+", "")
                 .replace("-", "")
                 .toLowerCase();
+    }
+
+    public static String getDateStringFromMillisecond(long createdAt) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yy", Locale.getDefault());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(createdAt);
+        return simpleDateFormat.format(calendar.getTime());
     }
 }

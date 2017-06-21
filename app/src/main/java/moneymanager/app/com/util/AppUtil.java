@@ -23,7 +23,8 @@ public class AppUtil {
     }
 
     public static String getDateStringFromMillisecond(long createdAt) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yy", Locale.getDefault());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yy" +
+                "", Locale.getDefault());
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(createdAt);
         return simpleDateFormat.format(calendar.getTime());

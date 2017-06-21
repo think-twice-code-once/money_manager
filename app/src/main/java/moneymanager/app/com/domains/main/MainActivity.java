@@ -2,6 +2,7 @@ package moneymanager.app.com.domains.main;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -42,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     @ViewById(R.id.activity_main_lv_options)
     ListView lvOptions;
 
-    private List<Fragment> screens;
     private List<String> titles;
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         initOptionsForSlidingMenu();
 
-        addDefaultScreen();
+        replaceScreen(0);
     }
 
     private void setUpActionBarDrawer() {
@@ -84,18 +84,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        screens = new ArrayList<>();
         titles = new ArrayList<>();
-
-        screens.add(new HomeFragment_());
         titles.add(getString(R.string.home));
-        screens.add(new CategoryFragment_());
         titles.add(getString(R.string.category));
-        screens.add(new ReportFragment_());
         titles.add(getString(R.string.report));
-        screens.add(new StrategyFragment_());
         titles.add(getString(R.string.strategy));
-        screens.add(new AboutFragment_());
         titles.add(getString(R.string.about));
     }
 
@@ -114,24 +107,38 @@ public class MainActivity extends AppCompatActivity {
         lvOptions.setOnItemClickListener((parent, view, position, id) -> {
             dlRoot.closeDrawers();
             setTitle(titles.get(position));
-
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.activity_main_fl_main_content, screens.get(position))
-                    .commit();
+            new Handler().postDelayed(() -> replaceScreen(position), 500);
             setTitle(titles.get(position));
-
             lvOptions.setItemChecked(position, true);
         });
     }
 
-    private void addDefaultScreen() {
+    private void replaceScreen(int position) {
+        Fragment newFragment;
+        switch (position) {
+            case 1:
+                newFragment = new CategoryFragment_();
+                break;
+            case 2:
+                newFragment = new ReportFragment_();
+                break;
+            case 3:
+                newFragment = new StrategyFragment_();
+                break;
+            case 4:
+                newFragment = new AboutFragment_();
+                break;
+            default:
+                newFragment = new HomeFragment_();
+                break;
+        }
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.activity_main_fl_main_content, screens.get(0))
+                .replace(R.id.activity_main_fl_main_content, newFragment)
                 .commit();
-        setTitle(titles.get(0));
-        lvOptions.setItemChecked(0, true);
+
+        setTitle(titles.get(position));
+        lvOptions.setItemChecked(position, true);
     }
 
     @Override

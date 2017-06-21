@@ -21,8 +21,13 @@ import java.util.List;
 import javax.inject.Inject;
 
 import moneymanager.app.com.R;
+import moneymanager.app.com.domains.home.add_item.AddItemActivity_;
 import moneymanager.app.com.factory.MainApplication;
 import moneymanager.app.com.models.Item;
+import moneymanager.app.com.models.ItemType;
+
+import static moneymanager.app.com.util.Constants.ITEM_TYPE;
+import static moneymanager.app.com.util.Constants.SCREEN_TITLE;
 
 /**
  * -> Created by Think-Twice-Code-Once on 6/18/2017.
@@ -75,14 +80,22 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         presenter.getAllItems();
     }
 
-    @Click(R.id.fragment_home_fab_add)
-    void clickAdd() {
-
+    @Click(R.id.fragment_home_fab_add_income)
+    void clickAddIncome() {
+        AddItemActivity_
+                .intent(this)
+                .extra(SCREEN_TITLE, getString(R.string.add_income))
+                .extra(ITEM_TYPE, ItemType.INCOME.toString())
+                .start();
     }
 
-    @Click(R.id.fragment_home_fab_subtract)
-    void clickSubtract() {
-
+    @Click(R.id.fragment_home_fab_add_payment)
+    void clickAddPayment() {
+        AddItemActivity_
+                .intent(this)
+                .extra(SCREEN_TITLE, getString(R.string.add_payment))
+                .extra(ITEM_TYPE, ItemType.PAYMENT.toString())
+                .start();
     }
 
     @Override

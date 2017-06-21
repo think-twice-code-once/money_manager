@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="moneymanager.app.com">
+          package="moneymanager.app.com">
 
     <application
         android:name=".factory.MainApplication_"
@@ -12,11 +12,13 @@
         android:theme="@style/AppTheme">
         <activity android:name=".domains.main.MainActivity_">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".domains.home.add_item.AddItemActivity_"/>
     </application>
 
 </manifest>

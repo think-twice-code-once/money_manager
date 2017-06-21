@@ -44,7 +44,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         holder.tvTime.setText(AppUtil.getDateStringFromMillisecond(item.getCreatedAt()));
         holder.tvValue.setText(String.valueOf(item.getValue()));
         holder.tvCategory.setText(item.getCategory().getName());
-        holder.cvRoot.setCardBackgroundColor(ItemType.PAY.toString().equals(item.getItemType())
+        holder.cvRoot.setCardBackgroundColor(ItemType.PAYMENT.toString().equals(item.getItemType())
                 ? ContextCompat.getColor(context, R.color.orange)
                 : ContextCompat.getColor(context, R.color.colorPrimary));
         holder.itemView.setOnClickListener(v -> {

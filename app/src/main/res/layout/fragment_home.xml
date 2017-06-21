@@ -22,7 +22,8 @@
             android:text="0"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            tools:ignore="HardcodedText"/>
 
     </FrameLayout>
 
@@ -33,6 +34,7 @@
         android:layout_below="@+id/fragment_home_fl_balance"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal"
+        android:baselineAligned="false"
         android:padding="5dp">
 
         <FrameLayout
@@ -43,7 +45,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pay: 0"
+                android:text="@string/payment"
                 android:textColor="@color/orange"
                 android:textSize="12sp"
                 android:layout_gravity="center_horizontal"
@@ -60,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Earn: 0"
+                android:text="@string/income"
                 android:textColor="@color/colorPrimary"
                 android:layout_gravity="center_horizontal"
                 android:textSize="12sp"
@@ -73,7 +75,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/fragment_home_fab_add"
+        android:layout_above="@+id/fragment_home_fab_add_income"
         android:layout_below="@+id/fragment_home_ll_pay_earn"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
@@ -103,7 +105,7 @@
     </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fragment_home_fab_add"
+        android:id="@+id/fragment_home_fab_add_income"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -114,12 +116,12 @@
         app:useCompatPadding="true"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fragment_home_fab_subtract"
+        android:id="@+id/fragment_home_fab_add_payment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:src="@drawable/ic_subtract"
+        android:src="@drawable/ic_add"
         app:backgroundTint="@color/orange"
         app:rippleColor="@color/orange_dark"
         app:useCompatPadding="true"/>

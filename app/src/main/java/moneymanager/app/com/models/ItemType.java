@@ -5,5 +5,5 @@ package moneymanager.app.com.models;
  */
 
 public enum ItemType {
-    PAY, EARN;
+    PAYMENT, INCOME;
 }

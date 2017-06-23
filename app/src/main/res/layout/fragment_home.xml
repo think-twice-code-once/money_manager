@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_margin="10dp"
-        android:background="@drawable/rect_green_corner"
+        android:background="@drawable/rect_green_opacity_corner"
         android:padding="5dp">
 
         <TextView

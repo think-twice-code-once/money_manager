@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         lvOptions.setOnItemClickListener((parent, view, position, id) -> {
             dlRoot.closeDrawers();
             setTitle(titles.get(position));
-            new Handler().postDelayed(() -> replaceScreen(position), 500);
+            new Handler().postDelayed(() -> replaceScreen(position), 250);
             setTitle(titles.get(position));
             lvOptions.setItemChecked(position, true);
         });

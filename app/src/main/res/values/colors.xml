@@ -6,6 +6,7 @@
     <color name="colorPrimaryOpacity">#aa42c662</color>
     <color name="colorAccent">#fff</color>
     <color name="white">#ffffff</color>
+    <color name="white_opacity">#80ffffff</color>
     <color name="transparent">#00000000</color>
     <color name="grey">#66aaaaaa</color>
     <color name="grey_opacity">#80e8e8e8</color>
@@ -14,4 +15,7 @@
     <color name="orange_dark">#c35200</color>
     <color name="black">#000000</color>
     <color name="black_opacity">#88000000</color>
+    <color name="grey_2">#cacaca</color>
+    <color name="black_2">#3b3b3b</color>
+    <color name="grey_3">#50282826</color>
 </resources>

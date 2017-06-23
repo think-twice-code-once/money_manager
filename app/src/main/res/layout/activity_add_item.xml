@@ -1,7 +1,358 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+                tools:ignore="Deprecated">
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/activity_add_item_ll_bottom"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="10dp">
+
+            <ImageView
+                android:id="@+id/activity_add_item_iv_required_value"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_required_green"
+                tools:ignore="ContentDescription"
+                android:layout_gravity="bottom"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <EditText
+                    android:id="@+id/activity_add_item_et_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15.3sp"
+                    android:hint="@string/value"
+                    android:paddingTop="10dp"
+                    android:background="@color/transparent"
+                    android:textStyle="bold"
+                    android:textColor="@color/black_2"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textCursorDrawable="@null"
+                    android:textColorHint="@color/grey_2"
+                    android:nextFocusDown="@+id/activity_add_item_et_category"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/grey_3"
+                    android:layout_gravity="center_vertical"/>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="10dp">
+
+            <ImageView
+                android:id="@+id/activity_add_item_iv_required_category"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_required_green"
+                tools:ignore="ContentDescription"
+                android:layout_gravity="bottom"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <EditText
+                    android:id="@+id/activity_add_item_et_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15.3sp"
+                    android:hint="@string/category"
+                    android:paddingTop="10dp"
+                    android:background="@color/transparent"
+                    android:textStyle="bold"
+                    android:textColor="@color/black_2"
+                    android:textCursorDrawable="@null"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHint="@color/grey_2"
+                    android:nextFocusDown="@+id/activity_add_item_et_detail"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/grey_3"
+                        android:layout_gravity="center_vertical"/>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="10dp">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_not_required"
+                tools:ignore="ContentDescription"
+                android:layout_gravity="bottom"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <EditText
+                    android:id="@+id/activity_add_item_et_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15.3sp"
+                    android:hint="@string/detail"
+                    android:paddingTop="10dp"
+                    android:background="@color/transparent"
+                    android:textStyle="bold"
+                    android:textColor="@color/black_2"
+                    android:textCursorDrawable="@null"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHint="@color/grey_2"
+                    android:nextFocusDown="@+id/activity_add_item_et_date"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/grey_3"
+                        android:layout_gravity="center_vertical"/>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="10dp">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_not_required"
+                tools:ignore="ContentDescription"
+                android:layout_gravity="bottom"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <EditText
+                    android:id="@+id/activity_add_item_et_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15.3sp"
+                    android:hint="@string/date"
+                    android:paddingTop="10dp"
+                    android:background="@color/transparent"
+                    android:textStyle="bold"
+                    android:textColor="@color/black_2"
+                    android:textCursorDrawable="@null"
+                    android:maxLines="1"
+                    android:inputType="datetime"
+                    android:singleLine="true"
+                    android:textColorHint="@color/grey_2"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/grey_3"
+                        android:layout_gravity="center_vertical"/>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+            
+            <ImageView
+                android:id="@+id/activity_add_item_iv_required_prompt"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_required_green"
+                tools:ignore="ContentDescription"/>
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/required"
+                android:textColor="@color/grey_2"/>
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_not_required"
+                tools:ignore="ContentDescription"
+                android:layout_marginStart="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/optional"
+                android:textColor="@color/grey_2"
+                android:layout_marginEnd="10dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/activity_add_item_ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/activity_add_item_btn_cancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@drawable/selector_button_white"
+                android:padding="0dp"
+                android:text="@string/cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/selector_white_green_color"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white_opacity"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/activity_add_item_btn_save_and_add_more"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@drawable/selector_button_white"
+                android:padding="0dp"
+                android:text="@string/save_and_add_more"
+                android:textAllCaps="false"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:textColor="@color/selector_white_green_color"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white_opacity"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/activity_add_item_btn_save"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@drawable/selector_button_white"
+                android:padding="0dp"
+                android:text="@string/save"
+                android:textAllCaps="false"
+                android:textColor="@color/selector_white_green_color"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

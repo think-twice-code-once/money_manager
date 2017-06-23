@@ -1,12 +1,14 @@
 package moneymanager.app.com.domains.home;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -44,9 +46,19 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         holder.tvTime.setText(AppUtil.getDateStringFromMillisecond(item.getCreatedAt()));
         holder.tvValue.setText(String.valueOf(item.getValue()));
         holder.tvCategory.setText(item.getCategory().getName());
-        holder.cvRoot.setCardBackgroundColor(ItemType.PAYMENT.toString().equals(item.getItemType())
-                ? ContextCompat.getColor(context, R.color.orange)
-                : ContextCompat.getColor(context, R.color.colorPrimary));
+        holder.llContainer.setBackground(ItemType.PAYMENT.toString().equals(item.getItemType())
+                ? ContextCompat.getDrawable(context, R.drawable.selector_white_orange_rect)
+                : ContextCompat.getDrawable(context, R.drawable.selector_white_green_rect));
+        ColorStateList colorStateList = ItemType.PAYMENT.toString().equals(item.getItemType())
+                ? ContextCompat.getColorStateList(context, R.color.selector_orange_white_color)
+                : ContextCompat.getColorStateList(context, R.color.selector_green_white_color);
+        holder.tvTime.setTextColor(colorStateList);
+        holder.tvValue.setTextColor(colorStateList);
+        holder.tvCategory.setTextColor(colorStateList);
+        holder.ivRightArrow.setImageDrawable(ItemType.PAYMENT.toString().equals(item.getItemType())
+                ? ContextCompat.getDrawable(context, R.drawable.selector_right_arrow_orange_white)
+                : ContextCompat.getDrawable(context, R.drawable.selector_right_arrow_green_white));
+
         holder.itemView.setOnClickListener(v -> {
 
         });
@@ -67,7 +79,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         TextView tvTime;
         TextView tvValue;
         TextView tvCategory;
-        CardView cvRoot;
+        LinearLayout llContainer;
+        ImageView ivRightArrow;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -75,7 +88,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             tvTime = (TextView) itemView.findViewById(R.id.item_tv_time);
             tvValue = (TextView) itemView.findViewById(R.id.item_tv_value);
             tvCategory = (TextView) itemView.findViewById(R.id.item_tv_category);
-            cvRoot = (CardView) itemView.findViewById(R.id.item_cv_root);
+            llContainer = (LinearLayout) itemView.findViewById(R.id.item_container);
+            ivRightArrow = (ImageView) itemView.findViewById(R.id.item_iv_right_arrow);
 
         }
     }

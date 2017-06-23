@@ -8,18 +8,19 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:padding="5dp"
-    app:cardBackgroundColor="@color/orange"
+    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="5dp"
     app:cardElevation="3dp"
     app:useCompatPadding="true"
     tools:ignore="HardcodedText">
 
     <LinearLayout
+        android:id="@+id/item_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:baselineAligned="false"
         android:orientation="horizontal"
-        android:background="@drawable/selector_item"
+        android:background="@drawable/selector_white_green_rect"
         android:padding="10dp">
 
         <FrameLayout
@@ -35,9 +36,9 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="25 June, 2017"
-                android:textColor="@color/white"
+                android:textColor="@color/selector_green_white_color"
                 android:textSize="13sp"
-                android:textStyle="italic"/>
+                android:textStyle="bold|italic"/>
 
         </FrameLayout>
 
@@ -55,7 +56,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="0"
-                android:textColor="@color/white"
+                android:textColor="@color/selector_green_white_color"
                 android:textSize="14sp"
                 android:textStyle="bold|italic"/>
 
@@ -75,7 +76,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="Category"
-                android:textColor="@color/white"
+                android:textColor="@color/selector_green_white_color"
                 android:textSize="12sp"
                 android:textStyle="bold"/>
 
@@ -87,10 +88,11 @@
             android:layout_weight="0.2">
 
             <ImageView
+                android:id="@+id/item_iv_right_arrow"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical|end"
-                android:src="@drawable/ic_right_arrow"
+                android:src="@drawable/selector_right_arrow_green_white"
                 tools:ignore="ContentDescription"/>
 
         </FrameLayout>

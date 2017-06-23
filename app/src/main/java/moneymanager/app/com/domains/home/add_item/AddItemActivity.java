@@ -1,9 +1,13 @@
 package moneymanager.app.com.domains.home.add_item;
 
+import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
@@ -13,6 +17,7 @@ import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.ViewById;
 
 import javax.inject.Inject;
 
@@ -35,6 +40,27 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
 
     @App
     MainApplication application;
+
+    @ViewById(R.id.activity_add_item_ll_bottom)
+    LinearLayout llBottom;
+
+    @ViewById(R.id.activity_add_item_btn_save)
+    Button btnSave;
+
+    @ViewById(R.id.activity_add_item_btn_save_and_add_more)
+    Button btnSaveAndAddMore;
+
+    @ViewById(R.id.activity_add_item_btn_cancel)
+    Button btnCancel;
+
+    @ViewById(R.id.activity_add_item_iv_required_value)
+    ImageView ivRequiredValue;
+
+    @ViewById(R.id.activity_add_item_iv_required_category)
+    ImageView ivRequiredCategory;
+
+    @ViewById(R.id.activity_add_item_iv_required_prompt)
+    ImageView ivRequiredPrompt;
 
     @Extra(SCREEN_TITLE)
     String title;
@@ -64,9 +90,19 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
 
         if(getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(
-                    ContextCompat.getColor(getApplicationContext(), ItemType.INCOME.toString().equals(itemType)
-                            ? R.color.colorPrimary : R.color.orange)));
+
+            int mainColor = ContextCompat.getColor(getApplicationContext(), ItemType.INCOME.toString().equals(itemType)
+                    ? R.color.colorPrimary : R.color.orange);
+            llBottom.setBackgroundColor(mainColor);
+
+            ColorStateList colorStateList = ContextCompat.getColorStateList(getApplicationContext(),
+                    ItemType.INCOME.toString().equals(itemType)
+                            ? R.color.selector_white_green_color : R.color.selector_white_orange_color);
+            btnSave.setTextColor(colorStateList);
+            btnSaveAndAddMore.setTextColor(colorStateList);
+            btnCancel.setTextColor(colorStateList);
+
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(mainColor));
 
             //just in case some devices not affected:
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -79,6 +115,12 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
                                         ? R.color.colorPrimaryDark : R.color.orange_dark));
             }
         }
+
+        int requiredIconRes = ItemType.INCOME.toString().equals(itemType)
+                ? R.drawable.ic_required_green : R.drawable.ic_required_orange;
+        ivRequiredValue.setImageResource(requiredIconRes);
+        ivRequiredCategory.setImageResource(requiredIconRes);
+        ivRequiredPrompt.setImageResource(requiredIconRes);
     }
 
     @OptionsItem(android.R.id.home)

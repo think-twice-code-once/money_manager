@@ -20,5 +20,13 @@
     <string name="payment">Payment</string>
     <string name="add_income">Add income</string>
     <string name="add_payment">Add payment</string>
+    <string name="save">Save</string>
+    <string name="save_and_add_more">Save &amp; add more</string>
+    <string name="cancel">Cancel</string>
+    <string name="value">Value</string>
+    <string name="detail">Detail</string>
+    <string name="required">Required</string>
+    <string name="optional">Optional</string>
+    <string name="date">Date (Auto insert current date)</string>
 
 </resources>

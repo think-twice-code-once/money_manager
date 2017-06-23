@@ -6,20 +6,27 @@
                 android:orientation="vertical"
                 tools:ignore="Deprecated">
 
+    <ScrollView
+        android:layout_above="@+id/activity_add_item_ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/activity_add_item_ll_bottom"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/activity_add_item_ll_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="15dp"
+            android:paddingTop="10dp"
             android:paddingBottom="15dp"
             android:paddingStart="5dp"
-            android:paddingEnd="10dp">
+            android:paddingEnd="10dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
             <ImageView
                 android:id="@+id/activity_add_item_iv_required_value"
@@ -41,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="15.3sp"
                     android:hint="@string/value"
-                    android:paddingTop="10dp"
+                    android:paddingTop="15dp"
                     android:background="@color/transparent"
                     android:textStyle="bold"
                     android:textColor="@color/black_2"
@@ -56,11 +63,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="15dp">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/grey_3"
-                    android:layout_gravity="center_vertical"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/grey_3"/>
 
                 </FrameLayout>
 
@@ -69,10 +76,11 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/activity_add_item_ll_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="15dp"
+            android:paddingTop="10dp"
             android:paddingBottom="15dp"
             android:paddingStart="5dp"
             android:paddingEnd="10dp">
@@ -97,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="15.3sp"
                     android:hint="@string/category"
-                    android:paddingTop="10dp"
+                    android:paddingTop="15dp"
                     android:background="@color/transparent"
                     android:textStyle="bold"
                     android:textColor="@color/black_2"
@@ -124,10 +132,11 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/activity_add_item_ll_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="15dp"
+            android:paddingTop="10dp"
             android:paddingBottom="15dp"
             android:paddingStart="5dp"
             android:paddingEnd="10dp">
@@ -151,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="15.3sp"
                     android:hint="@string/detail"
-                    android:paddingTop="10dp"
+                    android:paddingTop="15dp"
                     android:background="@color/transparent"
                     android:textStyle="bold"
                     android:textColor="@color/black_2"
@@ -178,10 +187,11 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/activity_add_item_ll_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="15dp"
+            android:paddingTop="10dp"
             android:paddingBottom="15dp"
             android:paddingStart="5dp"
             android:paddingEnd="10dp">
@@ -205,7 +215,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="15.3sp"
                     android:hint="@string/date"
-                    android:paddingTop="10dp"
+                    android:paddingTop="15dp"
                     android:background="@color/transparent"
                     android:textStyle="bold"
                     android:textColor="@color/black_2"
@@ -267,6 +277,8 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/activity_add_item_ll_bottom"

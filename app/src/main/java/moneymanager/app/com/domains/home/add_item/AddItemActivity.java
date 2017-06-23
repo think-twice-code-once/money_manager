@@ -1,11 +1,15 @@
 package moneymanager.app.com.domains.home.add_item;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -14,6 +18,7 @@ import com.hannesdorfmann.mosby.mvp.MvpActivity;
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OptionsItem;
@@ -61,6 +66,18 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
 
     @ViewById(R.id.activity_add_item_iv_required_prompt)
     ImageView ivRequiredPrompt;
+
+    @ViewById(R.id.activity_add_item_et_value)
+    EditText etValue;
+
+    @ViewById(R.id.activity_add_item_et_category)
+    EditText etCategory;
+
+    @ViewById(R.id.activity_add_item_et_detail)
+    EditText etDetail;
+
+    @ViewById(R.id.activity_add_item_et_date)
+    EditText etDate;
 
     @Extra(SCREEN_TITLE)
     String title;
@@ -126,5 +143,35 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
     @OptionsItem(android.R.id.home)
     void clickBackNavigation() {
         onBackPressed();
+    }
+
+    @Click(R.id.activity_add_item_ll_value)
+    void clickValue() {
+        etValue.requestFocus();
+        showSoftInput(etValue);
+    }
+
+    @Click(R.id.activity_add_item_ll_category)
+    void clickCategory() {
+        etCategory.requestFocus();
+        showSoftInput(etCategory);
+    }
+
+
+    @Click(R.id.activity_add_item_ll_detail)
+    void clickDetail() {
+        etDetail.requestFocus();
+        showSoftInput(etDetail);
+    }
+
+    @Click(R.id.activity_add_item_ll_date)
+    void clickDate() {
+        etDate.requestFocus();
+        showSoftInput(etDate);
+    }
+
+    private void showSoftInput(View currentView) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(currentView, 0);
     }
 }

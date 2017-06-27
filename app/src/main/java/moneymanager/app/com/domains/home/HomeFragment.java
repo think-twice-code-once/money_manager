@@ -26,6 +26,7 @@ import moneymanager.app.com.domains.home.add_item.AddItemActivity_;
 import moneymanager.app.com.factory.MainApplication;
 import moneymanager.app.com.models.Item;
 import moneymanager.app.com.models.ItemType;
+import moneymanager.app.com.util.AppUtil;
 
 import static moneymanager.app.com.util.Constants.ITEM_TYPE;
 import static moneymanager.app.com.util.Constants.SCREEN_TITLE;
@@ -45,6 +46,15 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @ViewById(R.id.fragment_home_tv_history_prompt)
     TextView tvPrompt;
+
+    @ViewById(R.id.fragment_home_tv_payment)
+    TextView tvPayment;
+
+    @ViewById(R.id.fragment_home_tv_income)
+    TextView tvIncome;
+
+    @ViewById(R.id.fragment_home_tv_balance)
+    TextView tvBalance;
 
     @App
     MainApplication application;
@@ -116,6 +126,23 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         }
         itemAdapter.clear();
         itemAdapter.addAll(items);
+        rvHistory.scrollToPosition(0);
+        calculateBalance(items);
+    }
+
+    private void calculateBalance(List<Item> items) {
+        float payment = 0;
+        float income = 0;
+        for (Item item : items) {
+            if (ItemType.PAYMENT.toString().equals(item.getItemType())) {
+                payment += item.getValue();
+            } else {
+                income += item.getValue();
+            }
+        }
+        tvPayment.setText(getString(R.string.payment) + ": " + AppUtil.getPrettyNumber(String.valueOf(payment), true));
+        tvIncome.setText(getString(R.string.income) + ": " + AppUtil.getPrettyNumber(String.valueOf(income), true));
+        tvBalance.setText(AppUtil.getPrettyNumber(String.valueOf(income - payment), true));
     }
 
     @Override

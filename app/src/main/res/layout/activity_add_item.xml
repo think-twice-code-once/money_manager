@@ -55,6 +55,7 @@
                     android:inputType="numberDecimal"
                     android:maxLines="1"
                     android:singleLine="true"
+                    android:maxLength="30"
                     android:textCursorDrawable="@null"
                     android:textColorHint="@color/grey_2"
                     android:nextFocusDown="@+id/activity_add_item_et_category"/>
@@ -110,6 +111,7 @@
                     android:textStyle="bold"
                     android:textColor="@color/black_2"
                     android:textCursorDrawable="@null"
+                    android:inputType="textCapWords"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textColorHint="@color/grey_2"

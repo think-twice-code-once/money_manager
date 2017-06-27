@@ -7,7 +7,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -17,6 +20,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -26,6 +32,8 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -37,6 +45,7 @@ import moneymanager.app.com.models.Item;
 import moneymanager.app.com.models.ItemType;
 import moneymanager.app.com.util.AppUtil;
 
+import static java.lang.Float.parseFloat;
 import static moneymanager.app.com.util.Constants.ITEM_TYPE;
 import static moneymanager.app.com.util.Constants.SCREEN_TITLE;
 
@@ -45,7 +54,8 @@ import static moneymanager.app.com.util.Constants.SCREEN_TITLE;
  */
 
 @EActivity(R.layout.activity_add_item)
-public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> implements AddItemView {
+public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> implements AddItemView,
+        Validator.ValidationListener {
 
     @Inject
     AddItemPresenter addItemPresenter;
@@ -74,9 +84,11 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
     @ViewById(R.id.activity_add_item_iv_required_prompt)
     ImageView ivRequiredPrompt;
 
+    @NotEmpty
     @ViewById(R.id.activity_add_item_et_value)
     EditText etValue;
 
+    @NotEmpty
     @ViewById(R.id.activity_add_item_et_category)
     EditText etCategory;
 
@@ -92,8 +104,11 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
     @Extra(ITEM_TYPE)
     String itemType;
 
+    private Validator validator;
+
     private boolean addMore;
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
+    private TextWatcher textWatcher;
 
     @NonNull
     @Override
@@ -112,6 +127,20 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
 
     @AfterViews
     void init() {
+
+        initValidator();
+
+        initBasicUi();
+
+        handleTypeValue();
+    }
+
+    private void initValidator() {
+        validator = new Validator(this);
+        validator.setValidationListener(this);
+    }
+
+    private void initBasicUi() {
         setTitle(title);
 
         if (getSupportActionBar() != null) {
@@ -147,6 +176,32 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
         ivRequiredValue.setImageResource(requiredIconRes);
         ivRequiredCategory.setImageResource(requiredIconRes);
         ivRequiredPrompt.setImageResource(requiredIconRes);
+    }
+
+    private void handleTypeValue() {
+        textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence content, int start, int before, int count) {
+                if (!content.toString().endsWith(".") && content.length() > 3) {
+                    etValue.removeTextChangedListener(textWatcher);
+                    etValue.setText(AppUtil.getPrettyNumber(content.toString().replace(" ", ""), false));
+                    etValue.setSelection(etValue.length());
+                    etValue.addTextChangedListener(textWatcher);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+
+        etValue.addTextChangedListener(textWatcher);
     }
 
     @OptionsItem(android.R.id.home)
@@ -187,14 +242,13 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
     @Click(R.id.activity_add_item_btn_save_and_add_more)
     void clickSaveAndAddMore() {
         addMore = true;
-        saveItem(getInputData());
-        resetFields();
+        validator.validate();
     }
 
     @Click(R.id.activity_add_item_btn_save)
     void clickSAve() {
         addMore = false;
-        saveItem(getInputData());
+        validator.validate();
     }
 
     private void resetFields() {
@@ -205,24 +259,35 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
         etValue.requestFocus();
     }
 
+    @Nullable
     private Item getInputData() {
-        float value = Float.parseFloat(etValue.getText().toString().trim());
-        String categoryName = etCategory.getText().toString().trim();
-        String detail = etDetail.getText().toString().trim();
-        long createdTime = System.currentTimeMillis();
+        float value = -1;
+        try {
+            value = parseFloat(etValue.getText().toString().trim().replace(" ", ""));
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+        }
+        if (value > 0) {
+            String categoryName = etCategory.getText().toString().trim();
+            String detail = etDetail.getText().toString().trim();
+            long createdTime = System.currentTimeMillis();
 
-        Category cate = new Category();
-        cate.setId(AppUtil.createUniqueId());
-        cate.setName(categoryName);
+            Category cate = new Category();
+            cate.setId(AppUtil.createUniqueId());
+            cate.setName(categoryName);
 
-        Item item = new Item();
-        item.setId(AppUtil.createUniqueId());
-        item.setValue(value);
-        item.setCategory(cate);
-        item.setDetail(detail);
-        item.setItemType(itemType);
-        item.setCreatedAt(createdTime);
-        return item;
+            Item item = new Item();
+            item.setId(AppUtil.createUniqueId());
+            item.setValue(value);
+            item.setCategory(cate);
+            item.setDetail(detail);
+            item.setItemType(itemType);
+            item.setCreatedAt(createdTime);
+            return item;
+        } else {
+            Toast.makeText(application, getString(R.string.invalid_value), Toast.LENGTH_SHORT).show();
+        }
+        return null;
     }
 
     private void saveItem(Item item) {
@@ -268,5 +333,25 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
     public void saveItemFailed(Throwable throwable) {
         hideLoading();
         Toast.makeText(application, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        if (getInputData() != null) {
+            saveItem(getInputData());
+            if (addMore) {
+                resetFields();
+            }
+        }
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            if (error.getView() instanceof EditText) {
+                ((EditText) error.getView()).setError(error.getCollatedErrorMessage(this));
+                error.getView().requestFocus();
+            }
+        }
     }
 }

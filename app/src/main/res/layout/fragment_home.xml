@@ -16,6 +16,7 @@
         android:padding="5dp">
 
         <TextView
+            android:id="@+id/fragment_home_tv_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -35,6 +36,8 @@
         android:layout_centerHorizontal="true"
         android:orientation="horizontal"
         android:baselineAligned="false"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:padding="5dp">
 
         <FrameLayout
@@ -43,12 +46,15 @@
             android:layout_weight="1">
 
             <TextView
+                android:id="@+id/fragment_home_tv_payment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="@string/payment"
                 android:textColor="@color/orange"
                 android:textSize="12sp"
                 android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
                 android:textStyle="bold"/>
 
         </FrameLayout>
@@ -59,12 +65,15 @@
             android:layout_weight="1">
 
             <TextView
+                android:id="@+id/fragment_home_tv_income"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
                 android:text="@string/income"
                 android:textColor="@color/colorPrimary"
                 android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
                 android:textSize="12sp"
                 android:textStyle="bold"/>
 

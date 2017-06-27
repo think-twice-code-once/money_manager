@@ -14,10 +14,10 @@
     <string name="report_detail">Statistics by time</string>
     <string name="strategy_detail">Manage money by your strategy</string>
     <string name="about_detail">More information</string>
-    <string name="balance">Balance</string>
     <string name="empty_history_prompt">The history will appear here</string>
     <string name="income">Income</string>
     <string name="payment">Payment</string>
+    <string name="balance">Balance</string>
     <string name="add_income">Add income</string>
     <string name="add_payment">Add payment</string>
     <string name="save">Save</string>
@@ -29,5 +29,6 @@
     <string name="optional">Optional</string>
     <string name="date">Date (Auto insert current date)</string>
     <string name="saving">Saving&#8230;</string>
+    <string name="invalid_value">This value is invalid</string>
 
 </resources>

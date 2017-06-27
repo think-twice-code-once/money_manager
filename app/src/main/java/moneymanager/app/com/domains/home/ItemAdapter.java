@@ -74,6 +74,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         notifyDataSetChanged();
     }
 
+    public void clear() {
+        items.clear();
+    }
+
     static class ItemViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvTime;

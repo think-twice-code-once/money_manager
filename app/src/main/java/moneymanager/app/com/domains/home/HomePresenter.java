@@ -26,7 +26,8 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
         realm.where(Item.class)
                 .findAll()
                 .asObservable()
-                .flatMap(items -> Observable.from(items).toList())
+                .flatMap(items -> Observable.from(items)
+                        .toSortedList((item1, item2) -> (int) (item2.getCreatedAt() - item1.getCreatedAt())))
                 .subscribe(items -> {
                     if (getView() != null) {
                         getView().getAllItemsSuccessful(items);

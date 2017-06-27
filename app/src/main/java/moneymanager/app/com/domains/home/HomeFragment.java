@@ -14,6 +14,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -35,6 +36,9 @@ import static moneymanager.app.com.util.Constants.SCREEN_TITLE;
 
 @EFragment(R.layout.fragment_home)
 public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView {
+
+    public static final int ADD_NEW_ITEM_REQUEST = 111;
+    public static final int ADD_NEW_ITEM_RESULT= 112;
 
     @ViewById(R.id.fragment_home_rv_history)
     RecyclerView rvHistory;
@@ -95,7 +99,14 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
                 .intent(this)
                 .extra(SCREEN_TITLE, getString(R.string.add_payment))
                 .extra(ITEM_TYPE, ItemType.PAYMENT.toString())
-                .start();
+                .startForResult(ADD_NEW_ITEM_REQUEST);
+    }
+
+    @OnActivityResult(ADD_NEW_ITEM_REQUEST)
+    void onResult(int resultCode) {
+        if (resultCode == ADD_NEW_ITEM_RESULT) {
+            presenter.getAllItems();
+        }
     }
 
     @Override
@@ -103,6 +114,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         if (items.size() > 0) {
             tvPrompt.setVisibility(View.GONE);
         }
+        itemAdapter.clear();
         itemAdapter.addAll(items);
     }
 

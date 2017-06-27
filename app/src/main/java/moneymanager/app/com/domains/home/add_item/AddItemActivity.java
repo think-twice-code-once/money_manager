@@ -1,9 +1,11 @@
 package moneymanager.app.com.domains.home.add_item;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
@@ -27,8 +30,12 @@ import org.androidannotations.annotations.ViewById;
 import javax.inject.Inject;
 
 import moneymanager.app.com.R;
+import moneymanager.app.com.domains.home.HomeFragment;
 import moneymanager.app.com.factory.MainApplication;
+import moneymanager.app.com.models.Category;
+import moneymanager.app.com.models.Item;
 import moneymanager.app.com.models.ItemType;
+import moneymanager.app.com.util.AppUtil;
 
 import static moneymanager.app.com.util.Constants.ITEM_TYPE;
 import static moneymanager.app.com.util.Constants.SCREEN_TITLE;
@@ -38,7 +45,7 @@ import static moneymanager.app.com.util.Constants.SCREEN_TITLE;
  */
 
 @EActivity(R.layout.activity_add_item)
-public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> {
+public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> implements AddItemView {
 
     @Inject
     AddItemPresenter addItemPresenter;
@@ -85,6 +92,9 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
     @Extra(ITEM_TYPE)
     String itemType;
 
+    private boolean addMore;
+    ProgressDialog progressDialog;
+
     @NonNull
     @Override
     public AddItemPresenter createPresenter() {
@@ -92,7 +102,6 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
     }
 
     @AfterInject
-
     void afterInject() {
         DaggerAddItemComponent
                 .builder()
@@ -105,7 +114,7 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
     void init() {
         setTitle(title);
 
-        if(getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             int mainColor = ContextCompat.getColor(getApplicationContext(), ItemType.INCOME.toString().equals(itemType)
@@ -170,8 +179,94 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
         showSoftInput(etDate);
     }
 
+    @Click(R.id.activity_add_item_btn_cancel)
+    void clickCancel() {
+        finish();
+    }
+
+    @Click(R.id.activity_add_item_btn_save_and_add_more)
+    void clickSaveAndAddMore() {
+        addMore = true;
+        saveItem(getInputData());
+        resetFields();
+    }
+
+    @Click(R.id.activity_add_item_btn_save)
+    void clickSAve() {
+        addMore = false;
+        saveItem(getInputData());
+    }
+
+    private void resetFields() {
+        etValue.setText("");
+        etCategory.setText("");
+        etDetail.setText("");
+        etDate.setText("");
+        etValue.requestFocus();
+    }
+
+    private Item getInputData() {
+        float value = Float.parseFloat(etValue.getText().toString().trim());
+        String categoryName = etCategory.getText().toString().trim();
+        String detail = etDetail.getText().toString().trim();
+        long createdTime = System.currentTimeMillis();
+
+        Category cate = new Category();
+        cate.setId(AppUtil.createUniqueId());
+        cate.setName(categoryName);
+
+        Item item = new Item();
+        item.setId(AppUtil.createUniqueId());
+        item.setValue(value);
+        item.setCategory(cate);
+        item.setDetail(detail);
+        item.setItemType(itemType);
+        item.setCreatedAt(createdTime);
+        return item;
+    }
+
+    private void saveItem(Item item) {
+        showLoading();
+        presenter.saveItem(item);
+    }
+
     private void showSoftInput(View currentView) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.showSoftInput(currentView, 0);
+    }
+
+    @Override
+    public void showLoading() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.saving));
+        progressDialog.show();
+    }
+
+    @Override
+    public void hideLoading() {
+        if (progressDialog != null) {
+            progressDialog.cancel();
+        }
+    }
+
+    @Override
+    public void saveItemSuccessful(Item item) {
+        setResult(HomeFragment.ADD_NEW_ITEM_RESULT);
+        callHideLoadingWithDelay();
+    }
+
+    private void callHideLoadingWithDelay() {
+        new Handler().postDelayed(() -> {
+            hideLoading();
+            if (!addMore) {
+                finish();
+            }
+        }, 500);
+    }
+
+    @Override
+    public void saveItemFailed(Throwable throwable) {
+        hideLoading();
+        Toast.makeText(application, throwable.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }

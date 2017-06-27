@@ -245,7 +245,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="end">
+            android:gravity="end"
+            android:layout_marginBottom="10dp">
             
             <ImageView
                 android:id="@+id/activity_add_item_iv_required_prompt"

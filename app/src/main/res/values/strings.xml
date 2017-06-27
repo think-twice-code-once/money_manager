@@ -28,5 +28,6 @@
     <string name="required">Required</string>
     <string name="optional">Optional</string>
     <string name="date">Date (Auto insert current date)</string>
+    <string name="saving">Saving&#8230;</string>
 
 </resources>

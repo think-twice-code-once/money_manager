@@ -14,7 +14,13 @@ public class Category extends RealmObject {
     @PrimaryKey
     private String id;
 
-    private String name;
+    private String tag;
+
+    private String content;
+
+    private String type;
+
+    private String parentId;
 
     public String getId() {
         return id;
@@ -24,11 +30,40 @@ public class Category extends RealmObject {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTag() {
+        return tag;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    @Override
+    public String toString() {
+        return getContent();
     }
 }

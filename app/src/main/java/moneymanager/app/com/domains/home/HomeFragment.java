@@ -81,6 +81,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     @AfterViews
     void init() {
         getHistoryList();
+
+        presenter.initDefaultCategories();
     }
 
     private void getHistoryList() {

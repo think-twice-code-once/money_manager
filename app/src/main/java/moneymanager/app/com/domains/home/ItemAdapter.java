@@ -45,7 +45,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
         holder.tvTime.setText(AppUtil.getDateStringFromMillisecond(item.getCreatedAt()));
         holder.tvValue.setText(AppUtil.getPrettyNumber(String.valueOf(item.getValue()), true));
-        holder.tvCategory.setText(item.getCategory().getName());
+        holder.tvCategory.setText(item.getCategory().getContent());
         holder.llContainer.setBackground(ItemType.PAYMENT.toString().equals(item.getItemType())
                 ? ContextCompat.getDrawable(context, R.drawable.selector_white_orange_rect)
                 : ContextCompat.getDrawable(context, R.drawable.selector_white_green_rect));

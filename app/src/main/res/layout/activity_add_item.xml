@@ -58,7 +58,7 @@
                     android:maxLength="30"
                     android:textCursorDrawable="@null"
                     android:textColorHint="@color/grey_2"
-                    android:nextFocusDown="@+id/activity_add_item_et_category"/>
+                    android:nextFocusDown="@+id/activity_add_item_actv_category"/>
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -100,8 +100,8 @@
                 android:orientation="vertical"
                 >
 
-                <EditText
-                    android:id="@+id/activity_add_item_et_category"
+                <AutoCompleteTextView
+                    android:id="@+id/activity_add_item_actv_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="15.3sp"
@@ -115,6 +115,7 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textColorHint="@color/grey_2"
+                    android:completionThreshold="1"
                     android:nextFocusDown="@+id/activity_add_item_et_detail"/>
 
                 <FrameLayout
@@ -169,6 +170,7 @@
                     android:textCursorDrawable="@null"
                     android:maxLines="1"
                     android:singleLine="true"
+                    android:inputType="textCapSentences"
                     android:textColorHint="@color/grey_2"
                     android:nextFocusDown="@+id/activity_add_item_et_date"/>
 

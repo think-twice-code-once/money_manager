@@ -100,6 +100,7 @@
                 android:orientation="vertical"
                 >
 
+                <!--TODO: nextFocusDown not working-->
                 <AutoCompleteTextView
                     android:id="@+id/activity_add_item_actv_category"
                     android:layout_width="match_parent"
@@ -116,6 +117,7 @@
                     android:singleLine="true"
                     android:textColorHint="@color/grey_2"
                     android:completionThreshold="1"
+                    android:imeOptions="actionNext"
                     android:nextFocusDown="@+id/activity_add_item_et_detail"/>
 
                 <FrameLayout

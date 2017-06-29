@@ -30,9 +30,8 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
                 .findAllAsync()
                 .addChangeListener(realmResultsItems ->
                         Observable.from(realmResultsItems)
-                                .flatMap(items -> Observable.from(realmResultsItems)
-                                        .toSortedList((item1, item2)
-                                                -> (int) (item2.getCreatedAt() - item1.getCreatedAt())))
+                                .toSortedList((item1, item2)
+                                        -> (int) (item2.getCreatedAt() - item1.getCreatedAt()))
                                 .subscribe(items -> {
                                     if (getView() != null) {
                                         getView().getAllItemsSuccessful(items);
@@ -68,20 +67,22 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
 
     private void initDefaultChildCategories() {
         Category foodCategory = realm.where(Category.class).equalTo("tag", "food").findFirst();
-        String[] childCateContents = {"Breakfast", "Lunch", "Dinner", "Milk", "Snack", "KFC"};
-        String[] childTags = {"breakfast", "lunch", "dinner", "milk", "snack", "kfc"};
-        String[] childTypes = {ItemType.PAYMENT.toString(), ItemType.PAYMENT.toString(),
-                ItemType.PAYMENT.toString(), ItemType.PAYMENT.toString(),
-                ItemType.PAYMENT.toString(), ItemType.INCOME.toString()};
+        if (foodCategory != null) {
+            String[] childCateContents = {"Breakfast", "Lunch", "Dinner", "Milk", "Snack", "KFC"};
+            String[] childTags = {"breakfast", "lunch", "dinner", "milk", "snack", "kfc"};
+            String[] childTypes = {ItemType.PAYMENT.toString(), ItemType.PAYMENT.toString(),
+                    ItemType.PAYMENT.toString(), ItemType.PAYMENT.toString(),
+                    ItemType.PAYMENT.toString(), ItemType.PAYMENT.toString()};
 
-        for (int j = 0; j < childCateContents.length; j++) {
-            Category c = new Category();
-            c.setId(AppUtil.createUniqueId());
-            c.setContent(childCateContents[j]);
-            c.setTag(childTags[j]);
-            c.setType(childTypes[j]);
-            c.setParentId(foodCategory.getId());
-            realm.executeTransaction(realm -> realm.copyToRealmOrUpdate(c));
+            for (int j = 0; j < childCateContents.length; j++) {
+                Category c = new Category();
+                c.setId(AppUtil.createUniqueId());
+                c.setContent(childCateContents[j]);
+                c.setTag(childTags[j]);
+                c.setType(childTypes[j]);
+                c.setParentId(foodCategory.getId());
+                realm.executeTransaction(realm -> realm.copyToRealmOrUpdate(c));
+            }
         }
     }
 

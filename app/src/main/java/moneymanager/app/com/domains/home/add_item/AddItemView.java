@@ -2,6 +2,9 @@ package moneymanager.app.com.domains.home.add_item;
 
 import com.hannesdorfmann.mosby.mvp.MvpView;
 
+import java.util.List;
+
+import moneymanager.app.com.models.Category;
 import moneymanager.app.com.models.Item;
 
 /**
@@ -17,4 +20,8 @@ public interface AddItemView extends MvpView {
     void saveItemSuccessful(Item item);
 
     void saveItemFailed(Throwable throwable);
+
+    void getAllCategoriesSuccessful(List<Category> categories);
+
+    void getAllCategoriesFailed(Throwable throwable);
 }

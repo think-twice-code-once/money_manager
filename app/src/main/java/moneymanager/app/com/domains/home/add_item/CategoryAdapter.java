@@ -5,18 +5,18 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.TextView;
+
+import java.util.List;
 
 import moneymanager.app.com.R;
 import moneymanager.app.com.models.Category;
 import moneymanager.app.com.models.ItemType;
-
-import static android.view.View.GONE;
 
 /**
  * -> Created by phong.nguyen@beesightsoft.com on 6/28/2017.
@@ -26,11 +26,13 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
 
     private Context context;
     private int resItem;
+    private List<Category> categories;
 
-    public CategoryAdapter(@NonNull Context context, @LayoutRes int resItem) {
+    public CategoryAdapter(@NonNull Context context, @LayoutRes int resItem, List<Category> categories) {
         super(context, resItem);
         this.context = context;
         this.resItem = resItem;
+        this.categories = categories;
     }
 
     @NonNull
@@ -57,11 +59,17 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
             categoryViewHolder.tvCategoryContent.setText(category.getContent());
             categoryViewHolder.tvCategoryContent.setTextColor(ContextCompat.getColor(context,
                     ItemType.INCOME.toString().equals(category.getType()) ? R.color.colorPrimary : R.color.orange));
-            categoryViewHolder.vMarginStart.setVisibility(
-                    !TextUtils.isEmpty(category.getParentId()) ? View.VISIBLE : GONE);
+//            categoryViewHolder.vMarginStart.setVisibility(
+//                    !TextUtils.isEmpty(category.getParentId()) ? View.VISIBLE : GONE);
         }
 
         return convertView;
+    }
+
+    @NonNull
+    @Override
+    public Filter getFilter() {
+        return new CategoryFilter(this, categories);
     }
 
     private static class CategoryViewHolder {

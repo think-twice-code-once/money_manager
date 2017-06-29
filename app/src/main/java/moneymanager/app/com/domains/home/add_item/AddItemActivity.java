@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -34,12 +35,10 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.realm.Realm;
 import moneymanager.app.com.R;
 import moneymanager.app.com.domains.home.HomeFragment;
 import moneymanager.app.com.factory.MainApplication;
@@ -47,7 +46,6 @@ import moneymanager.app.com.models.Category;
 import moneymanager.app.com.models.Item;
 import moneymanager.app.com.models.ItemType;
 import moneymanager.app.com.util.AppUtil;
-import rx.Observable;
 
 import static java.lang.Float.parseFloat;
 import static moneymanager.app.com.util.Constants.ITEM_TYPE;
@@ -108,15 +106,11 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
     @Extra(ITEM_TYPE)
     String itemType;
 
-    @Inject
-    Realm realm;
-
     private Validator validator;
 
     private boolean addMore;
     private ProgressDialog progressDialog;
     private TextWatcher textWatcher;
-    private List<Category> categories;
     private CategoryAdapter categoryAdapter;
 
     @NonNull
@@ -143,7 +137,7 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
 
         handleTypeValue();
 
-        getCategories();
+        presenter.getAllCategories(itemType);
     }
 
     private void initValidator() {
@@ -215,39 +209,56 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
         etValue.addTextChangedListener(textWatcher);
     }
 
-    private void getCategories() {
-        categories = new ArrayList<>(realm.copyFromRealm(realm.where(Category.class).findAll()));
+    @Override
+    public void getAllCategoriesSuccessful(List<Category> categories) {
+        handleShowingCategories(categories);
+    }
 
-        categoryAdapter = new CategoryAdapter(this, R.layout.item_category);
-        actvCategory.setAdapter(categoryAdapter);
-        actvCategory.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    @Override
+    public void getAllCategoriesFailed(Throwable throwable) {
 
-            }
+    }
 
-            @Override
-            public void onTextChanged(CharSequence content, int start, int before, int count) {
-                if (categories != null) {
-                    Observable.from(categories)
-                            .filter(category
-                                    -> category.getContent().toLowerCase().contains(content.toString().toLowerCase()))
-                            .filter(category -> itemType.equals(category.getType()))
-                            .toSortedList((category1, category2)
-                                    -> category1.getContent().compareToIgnoreCase(category2.getContent()))
-                            .subscribe(filteredCategories -> {
-                                categoryAdapter.clear();
-                                categoryAdapter.addAll(filteredCategories);
-                                categoryAdapter.notifyDataSetChanged();
-                            }, Throwable::printStackTrace);
+    private void handleShowingCategories(List<Category> categories) {
+        if (categories != null) {
+            categoryAdapter = new CategoryAdapter(this, R.layout.item_category, categories);
+            actvCategory.setAdapter(categoryAdapter);
+            actvCategory.setText("");
+            actvCategory.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
                 }
-            }
 
-            @Override
-            public void afterTextChanged(Editable s) {
+                @Override
+                public void onTextChanged(CharSequence content, int start, int before, int count) {
+                    if (TextUtils.isEmpty(content.toString().trim())) {
+                        showCategoriesDropdown();
+                    }
+                }
 
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+            actvCategory.setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus) {
+                    showCategoriesDropdown();
+                }
+            });
+        }
+
+        /*TODO: Auto save newly created categories and show it just in the next time when user type category*/
+    }
+
+    private void showCategoriesDropdown() {
+        new Handler().postDelayed(() -> {
+            if (actvCategory.hasFocus()) {
+                actvCategory.showDropDown();
             }
-        });
+        }, 100);
     }
 
     @OptionsItem(android.R.id.home)
@@ -265,6 +276,12 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
     void clickCategory() {
         actvCategory.requestFocus();
         showSoftInput(actvCategory);
+        showCategoriesDropdown();
+    }
+
+    @Click(R.id.activity_add_item_actv_category)
+    void clickActvCategory() {
+        showCategoriesDropdown();
     }
 
 
@@ -393,11 +410,14 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
         }
     }
 
+    @SuppressWarnings("Convert2streamapi")
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        errors.stream().filter(error -> error.getView() instanceof EditText).forEach(error -> {
-            ((EditText) error.getView()).setError(error.getCollatedErrorMessage(this));
-            error.getView().requestFocus();
-        });
+        for (ValidationError error : errors) {
+            if (error.getView() instanceof EditText) {
+                ((EditText) error.getView()).setError(error.getCollatedErrorMessage(this));
+                error.getView().requestFocus();
+            }
+        }
     }
 }

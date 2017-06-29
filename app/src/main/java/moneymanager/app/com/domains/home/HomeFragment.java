@@ -102,7 +102,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
                 .intent(this)
                 .extra(SCREEN_TITLE, getString(R.string.add_income))
                 .extra(ITEM_TYPE, ItemType.INCOME.toString())
-                .start();
+                .startForResult(ADD_NEW_ITEM_REQUEST);
     }
 
     @Click(R.id.fragment_home_fab_add_payment)

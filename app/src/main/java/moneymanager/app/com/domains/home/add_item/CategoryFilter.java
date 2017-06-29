@@ -32,13 +32,15 @@ public class CategoryFilter extends Filter {
          incorrect thread from Realm*/
 
         if (!TextUtils.isEmpty(content)) {
+            String lowercaseContent = content.toString().trim().toLowerCase();
             Observable.from(originalCategories)
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .filter(category
-                            -> category.getContent().toLowerCase().contains(content.toString().trim().toLowerCase()))
+                            -> category.getContent().toLowerCase().contains(lowercaseContent))
                     .toSortedList((category1, category2)
-                            -> category1.getContent().compareToIgnoreCase(category2.getContent()))
+                            -> category1.getContent().toLowerCase().indexOf(lowercaseContent)
+                            - category2.getContent().toLowerCase().indexOf(lowercaseContent))
                     .subscribe(categories -> {
                         filterResults.values = categories;
                         filterResults.count = categories.size();
@@ -52,6 +54,7 @@ public class CategoryFilter extends Filter {
         return filterResults;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void publishResults(CharSequence constraint, FilterResults results) {
         if (results.values instanceof List) {

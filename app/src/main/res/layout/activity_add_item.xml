@@ -118,9 +118,11 @@
                     android:textColorHint="@color/grey_2"
                     android:completionThreshold="1"
                     android:imeOptions="actionNext"
+                    android:dropDownAnchor="@+id/activity_add_item_fl_category_separator"
                     android:nextFocusDown="@+id/activity_add_item_et_detail"/>
 
                 <FrameLayout
+                    android:id="@+id/activity_add_item_fl_category_separator"
                     android:layout_width="match_parent"
                     android:layout_height="15dp">
 

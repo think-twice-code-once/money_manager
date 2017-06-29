@@ -111,7 +111,6 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
     private boolean addMore;
     private ProgressDialog progressDialog;
     private TextWatcher textWatcher;
-    private CategoryAdapter categoryAdapter;
 
     @NonNull
     @Override
@@ -221,7 +220,7 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
 
     private void handleShowingCategories(List<Category> categories) {
         if (categories != null) {
-            categoryAdapter = new CategoryAdapter(this, R.layout.item_category, categories);
+            CategoryAdapter categoryAdapter = new CategoryAdapter(this, R.layout.item_category, categories);
             actvCategory.setAdapter(categoryAdapter);
             actvCategory.setText("");
             actvCategory.addTextChangedListener(new TextWatcher() {
@@ -331,18 +330,12 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
             ex.printStackTrace();
         }
         if (value > 0) {
-            String categoryName = actvCategory.getText().toString().trim();
             String detail = etDetail.getText().toString().trim();
             long createdTime = System.currentTimeMillis();
-
-            Category cate = new Category();
-            cate.setId(AppUtil.createUniqueId());
-            cate.setContent(categoryName);
 
             Item item = new Item();
             item.setId(AppUtil.createUniqueId());
             item.setValue(value);
-            item.setCategory(cate);
             item.setDetail(detail);
             item.setItemType(itemType);
             item.setCreatedAt(createdTime);
@@ -353,11 +346,11 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
         return null;
     }
 
-    private void saveItem(Item item) {
+    private void saveItem(Item item, String categoryTag) {
         if (!addMore) {
             showLoading();
         }
-        presenter.saveItem(item);
+        presenter.saveItem(item, categoryTag);
     }
 
     private void showSoftInput(View currentView) {
@@ -403,9 +396,10 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
     @Override
     public void onValidationSucceeded() {
         if (getInputData() != null) {
-            saveItem(getInputData());
+            saveItem(getInputData(), actvCategory.getText().toString().trim());
             if (addMore) {
                 resetFields();
+                presenter.getAllCategories(itemType);
             }
         }
     }

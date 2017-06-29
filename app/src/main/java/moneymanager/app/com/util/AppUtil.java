@@ -53,4 +53,20 @@ public class AppUtil {
         return isRemovedDotZero && prettyNumberStr.endsWith(".0")
                 ? prettyNumberStr.trim().replace(".0", "") : prettyNumberStr.trim();
     }
+
+    public static String getPrettyCategory(String inputCategory) {
+        return inputCategory;
+    }
+
+    public static String getCategoryTag(String categoryName) {
+        String[] words = categoryName.trim().toLowerCase().split(" +");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < words.length; i++) {
+            stringBuilder.append(words[i]);
+            if (i != (words.length -1)) {
+                stringBuilder.append("_");
+            }
+        }
+        return stringBuilder.toString();
+    }
 }

@@ -30,5 +30,6 @@
     <string name="date">Date (Auto insert current date)</string>
     <string name="saving">Saving&#8230;</string>
     <string name="invalid_value">This value is invalid</string>
+    <string name="close">Close</string>
 
 </resources>

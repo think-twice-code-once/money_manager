@@ -151,4 +151,11 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     public void getAllItemsFailed(Throwable throwable) {
         Toast.makeText(application, throwable.getMessage(), Toast.LENGTH_LONG).show();
     }
+
+    @Click(R.id.fragment_home_fl_balance)
+    void clickBalance() {
+        PromptBalanceDialog promptBalanceDialog = new PromptBalanceDialog_();
+        promptBalanceDialog.setBalance(tvBalance.getText().toString());
+        promptBalanceDialog.show(getFragmentManager(), PromptBalanceDialog.class.getSimpleName());
+    }
 }

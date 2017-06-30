@@ -30,6 +30,11 @@
     <string name="date">Date (Auto insert current date)</string>
     <string name="saving">Saving&#8230;</string>
     <string name="invalid_value">This value is invalid</string>
-    <string name="close">Close</string>
-
+    <string name="got_it">Got it</string>
+    <string name="balance_prompt"><![CDATA[This is your Balance = <font color="#42c662">Income</font> -
+        <font color="#f66700">Payment</font>]]></string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="date_detail">Date</string>
+    <string name="not_specified">Not specified</string>
 </resources>

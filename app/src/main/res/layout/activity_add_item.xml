@@ -7,6 +7,7 @@
                 tools:ignore="Deprecated">
 
     <ScrollView
+        android:id="@+id/activity_add_item_sv_container"
         android:layout_above="@+id/activity_add_item_ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

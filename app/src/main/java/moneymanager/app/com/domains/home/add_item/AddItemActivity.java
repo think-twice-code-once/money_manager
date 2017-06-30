@@ -3,8 +3,6 @@ package moneymanager.app.com.domains.home.add_item;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,9 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.hannesdorfmann.mosby.mvp.MvpActivity;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -32,7 +30,6 @@ import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -40,6 +37,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import moneymanager.app.com.R;
+import moneymanager.app.com.domains.BaseActivity;
 import moneymanager.app.com.domains.home.HomeFragment;
 import moneymanager.app.com.factory.MainApplication;
 import moneymanager.app.com.models.Category;
@@ -48,6 +46,7 @@ import moneymanager.app.com.models.ItemType;
 import moneymanager.app.com.util.AppUtil;
 
 import static java.lang.Float.parseFloat;
+import static moneymanager.app.com.util.Constants.IS_EDIT_ITEM;
 import static moneymanager.app.com.util.Constants.ITEM_TYPE;
 import static moneymanager.app.com.util.Constants.SCREEN_TITLE;
 
@@ -56,7 +55,7 @@ import static moneymanager.app.com.util.Constants.SCREEN_TITLE;
  */
 
 @EActivity(R.layout.activity_add_item)
-public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> implements AddItemView,
+public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter> implements AddItemView,
         Validator.ValidationListener {
 
     @Inject
@@ -64,6 +63,9 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
 
     @App
     MainApplication application;
+
+    @ViewById(R.id.activity_add_item_sv_container)
+    ScrollView svContainer;
 
     @ViewById(R.id.activity_add_item_ll_bottom)
     LinearLayout llBottom;
@@ -106,6 +108,9 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
     @Extra(ITEM_TYPE)
     String itemType;
 
+    @Extra(IS_EDIT_ITEM)
+    boolean isEditItem;
+
     private Validator validator;
 
     private boolean addMore;
@@ -147,39 +152,30 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
     private void initBasicUi() {
         setTitle(title);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        changeActionBarAndStatusBarColor(itemType);
 
-            int mainColor = ContextCompat.getColor(getApplicationContext(), ItemType.INCOME.toString().equals(itemType)
-                    ? R.color.colorPrimary : R.color.orange);
-            llBottom.setBackgroundColor(mainColor);
+        changeUiByItemType();
+    }
 
-            ColorStateList colorStateList = ContextCompat.getColorStateList(getApplicationContext(),
-                    ItemType.INCOME.toString().equals(itemType)
-                            ? R.color.selector_white_green_color : R.color.selector_white_orange_color);
-            btnSave.setTextColor(colorStateList);
-            btnSaveAndAddMore.setTextColor(colorStateList);
-            btnCancel.setTextColor(colorStateList);
+    private void changeUiByItemType() {
+        llBottom.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),
+                ItemType.INCOME.toString().equals(itemType)
+                        ? R.color.colorPrimary : R.color.orange));
 
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(mainColor));
-
-            //just in case some devices not affected:
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-            getSupportActionBar().setDisplayShowTitleEnabled(true);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                getWindow()
-                        .setStatusBarColor(ContextCompat
-                                .getColor(getApplicationContext(), ItemType.INCOME.toString().equals(itemType)
-                                        ? R.color.colorPrimaryDark : R.color.orange_dark));
-            }
-        }
+        ColorStateList colorStateList = ContextCompat.getColorStateList(getApplicationContext(),
+                ItemType.INCOME.toString().equals(itemType)
+                        ? R.color.selector_white_green_color : R.color.selector_white_orange_color);
+        btnSave.setTextColor(colorStateList);
+        btnSaveAndAddMore.setTextColor(colorStateList);
+        btnCancel.setTextColor(colorStateList);
 
         int requiredIconRes = ItemType.INCOME.toString().equals(itemType)
                 ? R.drawable.ic_required_green : R.drawable.ic_required_orange;
         ivRequiredValue.setImageResource(requiredIconRes);
         ivRequiredCategory.setImageResource(requiredIconRes);
         ivRequiredPrompt.setImageResource(requiredIconRes);
+
+        btnSaveAndAddMore.setVisibility(isEditItem ? View.GONE : View.VISIBLE);
     }
 
     private void handleTypeValue() {
@@ -247,9 +243,14 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
                     showCategoriesDropdown();
                 }
             });
-        }
 
-        /*TODO: Auto save newly created categories and show it just in the next time when user type category*/
+            actvCategory.setOnDismissListener(() ->
+                    new Handler().postDelayed(() -> {
+                        if (!actvCategory.isPopupShowing()) {
+                            svContainer.scrollTo(0, 0);
+                        }
+                    }, 500));
+        }
     }
 
     private void showCategoriesDropdown() {
@@ -258,11 +259,6 @@ public class AddItemActivity extends MvpActivity<AddItemView, AddItemPresenter> 
                 actvCategory.showDropDown();
             }
         }, 100);
-    }
-
-    @OptionsItem(android.R.id.home)
-    void clickBackNavigation() {
-        onBackPressed();
     }
 
     @Click(R.id.activity_add_item_ll_value)

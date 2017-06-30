@@ -15,9 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import moneymanager.app.com.R;
+import moneymanager.app.com.domains.home.detail.ItemDetailActivity_;
 import moneymanager.app.com.models.Item;
 import moneymanager.app.com.models.ItemType;
 import moneymanager.app.com.util.AppUtil;
+
+import static moneymanager.app.com.util.Constants.ITEM_CATEGORY;
+import static moneymanager.app.com.util.Constants.ITEM_DATE;
+import static moneymanager.app.com.util.Constants.ITEM_DETAIL;
+import static moneymanager.app.com.util.Constants.ITEM_TYPE;
+import static moneymanager.app.com.util.Constants.ITEM_VALUE;
 
 /**
  * -> Created by phong.nguyen@beesightsoft.com on 6/20/2017.
@@ -59,9 +66,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 ? ContextCompat.getDrawable(context, R.drawable.selector_right_arrow_orange_white)
                 : ContextCompat.getDrawable(context, R.drawable.selector_right_arrow_green_white));
 
-        holder.itemView.setOnClickListener(v -> {
-
-        });
+        holder.itemView.setOnClickListener(v ->
+                ItemDetailActivity_.intent(context)
+                        .extra(ITEM_TYPE, item.getItemType())
+                        .extra(ITEM_VALUE, holder.tvValue.getText().toString())
+                        .extra(ITEM_CATEGORY, holder.tvCategory.getText().toString())
+                        .extra(ITEM_DETAIL, item.getDetail())
+                        .extra(ITEM_DATE, holder.tvTime.getText().toString())
+                        .start());
     }
 
     @Override

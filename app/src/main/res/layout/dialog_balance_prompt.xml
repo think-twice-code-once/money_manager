@@ -41,16 +41,17 @@
         </FrameLayout>
 
         <TextView
+            android:id="@+id/dialog_balance_prompt_tv_balance_prompt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:padding="10dp"
-            android:text="This is your balance = Income - Payment"
+            android:text="@string/balance_prompt"
             android:textColor="@color/black_2"
-            android:textSize="15dp"
+            android:textSize="14dp"
             android:textStyle="bold"
-            tools:ignore="HardcodedText,SpUsage"/>
+            tools:ignore="SpUsage"/>
 
         <Button
             android:id="@+id/dialog_balance_prompt_bnt_close"
@@ -60,7 +61,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
             android:background="@drawable/selector_green_white_rect"
-            android:text="@string/close"
+            android:text="@string/got_it"
             android:textAllCaps="false"
             android:textStyle="bold"
             android:textColor="@color/selector_white_green_color"

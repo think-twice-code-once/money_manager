@@ -1,8 +1,10 @@
 package moneymanager.app.com.domains.home;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.Html;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -22,6 +24,9 @@ public class PromptBalanceDialog extends DialogFragment {
     @ViewById(R.id.dialog_balance_prompt_tv_balance)
     TextView tvBalance;
 
+    @ViewById(R.id.dialog_balance_prompt_tv_balance_prompt)
+    TextView tvBalancePrompt;
+
     private String balance;
 
     public void setBalance(String balance) {
@@ -34,9 +39,15 @@ public class PromptBalanceDialog extends DialogFragment {
         setStyle(STYLE_NORMAL, android.R.style.Theme_Translucent_NoTitleBar);
     }
 
+    @SuppressWarnings("deprecation")
     @AfterViews
     void init () {
         tvBalance.setText(balance);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            tvBalancePrompt.setText(Html.fromHtml(getString(R.string.balance_prompt), Html.FROM_HTML_MODE_LEGACY));
+        } else {
+            tvBalancePrompt.setText(Html.fromHtml(getString(R.string.balance_prompt)));
+        }
     }
 
     @Click(R.id.dialog_balance_prompt_bnt_close)

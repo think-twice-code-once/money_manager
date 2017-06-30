@@ -24,8 +24,7 @@ public class AppUtil {
     }
 
     public static String getDateStringFromMillisecond(long createdAt) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yy" +
-                "", Locale.getDefault());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yy", Locale.getDefault());
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(createdAt);
         return simpleDateFormat.format(calendar.getTime());
@@ -54,6 +53,7 @@ public class AppUtil {
                 ? prettyNumberStr.trim().replace(".0", "") : prettyNumberStr.trim();
     }
 
+    /*TODO: make category name capital words*/
     public static String getPrettyCategory(String inputCategory) {
         return inputCategory;
     }

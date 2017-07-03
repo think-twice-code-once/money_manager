@@ -1,8 +1,11 @@
 package moneymanager.app.com.domains;
 
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 import com.hannesdorfmann.mosby.mvp.MvpPresenter;
@@ -40,6 +43,17 @@ public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>>
                                         ? R.color.colorPrimaryDark : R.color.orange_dark));
             }
         }
+    }
+
+    public void showKeyboard(View currentView) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(currentView, 0);
+    }
+
+    public void hideKeyboard(View currentView) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(currentView.getWindowToken(), 0);
+
     }
 
     @OptionsItem(android.R.id.home)

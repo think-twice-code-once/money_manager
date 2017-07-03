@@ -1,7 +1,6 @@
 package moneymanager.app.com.domains.home.add_item;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Handler;
@@ -12,13 +11,13 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -106,8 +105,8 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
     @ViewById(R.id.activity_add_item_et_detail)
     EditText etDetail;
 
-    @ViewById(R.id.activity_add_item_et_date)
-    EditText etDate;
+    @ViewById(R.id.activity_add_item_tv_date)
+    TextView tvDate;
 
     @Extra(SCREEN_TITLE)
     String title;
@@ -138,6 +137,7 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
     private boolean addMore;
     private ProgressDialog progressDialog;
     private TextWatcher textWatcher;
+    private long createdTime = -1;
 
     @NonNull
     @Override
@@ -161,7 +161,9 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
 
         initBasicUi();
 
-        handleTypeValue();
+        handleTypingValue();
+
+        handleTyingDate();
 
         presenter.getAllCategories(itemType);
     }
@@ -204,11 +206,11 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
             etValue.setText(itemValue);
             actvCategory.setText(itemCategory);
             etDetail.setText(itemDetail);
-            etDate.setText(itemDate);
+            tvDate.setText(itemDate);
         }
     }
 
-    private void handleTypeValue() {
+    private void handleTypingValue() {
         textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -232,6 +234,25 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
         };
 
         etValue.addTextChangedListener(textWatcher);
+    }
+
+    private void handleTyingDate() {
+        tvDate.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                showDatePicker();
+            }
+        });
+    }
+
+    private void showDatePicker() {
+        hideKeyboard(tvDate);
+        CustomDatePicker datePicker = new CustomDatePicker();
+        datePicker.setItemType(itemType);
+        datePicker.setOnSelectDateListener(createdTime -> {
+            tvDate.setText(AppUtil.getDateStringFromMillisecond(createdTime));
+            AddItemActivity.this.createdTime = createdTime;
+        });
+        datePicker.show(getSupportFragmentManager(), CustomDatePicker.class.getSimpleName());
     }
 
     @Override
@@ -294,13 +315,13 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
     @Click(R.id.activity_add_item_ll_value)
     void clickValue() {
         etValue.requestFocus();
-        showSoftInput(etValue);
+        showKeyboard(etValue);
     }
 
     @Click(R.id.activity_add_item_ll_category)
     void clickCategory() {
         actvCategory.requestFocus();
-        showSoftInput(actvCategory);
+        showKeyboard(actvCategory);
         showCategoriesDropdown();
     }
 
@@ -309,17 +330,20 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
         showCategoriesDropdown();
     }
 
-
     @Click(R.id.activity_add_item_ll_detail)
     void clickDetail() {
         etDetail.requestFocus();
-        showSoftInput(etDetail);
+        showKeyboard(etDetail);
     }
 
     @Click(R.id.activity_add_item_ll_date)
     void clickDate() {
-        etDate.requestFocus();
-        showSoftInput(etDate);
+        showDatePicker();
+    }
+
+    @Click(R.id.activity_add_item_tv_date)
+    void clickTvDate() {
+       showDatePicker();
     }
 
     @Click(R.id.activity_add_item_btn_cancel)
@@ -343,7 +367,7 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
         etValue.setText("");
         actvCategory.setText("");
         etDetail.setText("");
-        etDate.setText("");
+        tvDate.setText("");
         etValue.requestFocus();
     }
 
@@ -357,7 +381,9 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
         }
         if (value > 0) {
             String detail = etDetail.getText().toString().trim();
-            long createdTime = System.currentTimeMillis();
+            if (createdTime == -1) {
+                createdTime = System.currentTimeMillis();
+            }
 
             Item item = new Item();
             if (TextUtils.isEmpty(itemId)) {
@@ -381,11 +407,6 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
             showLoading();
         }
         presenter.saveItem(item, categoryTag);
-    }
-
-    private void showSoftInput(View currentView) {
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.showSoftInput(currentView, 0);
     }
 
     @Override
@@ -417,8 +438,8 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
             if (!etDetail.getText().toString().trim().equals(itemDetail)) {
                 editData.putExtra(ITEM_DETAIL, etDetail.getText().toString().trim());
             }
-            if (!etDate.getText().toString().trim().equals(itemDate)) {
-                editData.putExtra(ITEM_DATE, etDate.getText().toString().trim());
+            if (!tvDate.getText().toString().trim().equals(itemDate)) {
+                editData.putExtra(ITEM_DATE, tvDate.getText().toString().trim());
             }
             setResult(EDIT_ITEM_RESULT, editData);
         }

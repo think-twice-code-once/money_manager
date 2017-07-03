@@ -177,7 +177,8 @@
                     android:singleLine="true"
                     android:inputType="textCapSentences"
                     android:textColorHint="@color/grey_2"
-                    android:nextFocusDown="@+id/activity_add_item_et_date"/>
+                    android:imeOptions="actionNext"
+                    android:nextFocusDown="@+id/activity_add_item_tv_date"/>
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -200,6 +201,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:addStatesFromChildren="true"
             android:paddingTop="10dp"
             android:paddingBottom="15dp"
             android:paddingStart="5dp"
@@ -218,8 +220,11 @@
                 android:orientation="vertical"
                 >
 
-                <EditText
-                    android:id="@+id/activity_add_item_et_date"
+                <TextView
+                    android:id="@+id/activity_add_item_tv_date"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="15.3sp"
@@ -230,7 +235,6 @@
                     android:textColor="@color/black_2"
                     android:textCursorDrawable="@null"
                     android:maxLines="1"
-                    android:inputType="datetime"
                     android:singleLine="true"
                     android:textColorHint="@color/grey_2"/>
 

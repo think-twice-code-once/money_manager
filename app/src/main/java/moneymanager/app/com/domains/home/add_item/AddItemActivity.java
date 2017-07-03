@@ -2,6 +2,7 @@ package moneymanager.app.com.domains.home.add_item;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -38,7 +39,6 @@ import javax.inject.Inject;
 
 import moneymanager.app.com.R;
 import moneymanager.app.com.domains.BaseActivity;
-import moneymanager.app.com.domains.home.HomeFragment;
 import moneymanager.app.com.factory.MainApplication;
 import moneymanager.app.com.models.Category;
 import moneymanager.app.com.models.Item;
@@ -46,8 +46,15 @@ import moneymanager.app.com.models.ItemType;
 import moneymanager.app.com.util.AppUtil;
 
 import static java.lang.Float.parseFloat;
+import static moneymanager.app.com.util.Constants.ADD_NEW_ITEM_RESULT;
+import static moneymanager.app.com.util.Constants.EDIT_ITEM_RESULT;
 import static moneymanager.app.com.util.Constants.IS_EDIT_ITEM;
+import static moneymanager.app.com.util.Constants.ITEM_CATEGORY;
+import static moneymanager.app.com.util.Constants.ITEM_DATE;
+import static moneymanager.app.com.util.Constants.ITEM_DETAIL;
+import static moneymanager.app.com.util.Constants.ITEM_ID;
 import static moneymanager.app.com.util.Constants.ITEM_TYPE;
+import static moneymanager.app.com.util.Constants.ITEM_VALUE;
 import static moneymanager.app.com.util.Constants.SCREEN_TITLE;
 
 /**
@@ -110,6 +117,21 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
 
     @Extra(IS_EDIT_ITEM)
     boolean isEditItem;
+
+    @Extra(ITEM_ID)
+    String itemId;
+
+    @Extra(ITEM_VALUE)
+    String itemValue;
+
+    @Extra(ITEM_CATEGORY)
+    String itemCategory;
+
+    @Extra(ITEM_DETAIL)
+    String itemDetail;
+
+    @Extra(ITEM_DATE)
+    String itemDate;
 
     private Validator validator;
 
@@ -175,7 +197,15 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
         ivRequiredCategory.setImageResource(requiredIconRes);
         ivRequiredPrompt.setImageResource(requiredIconRes);
 
-        btnSaveAndAddMore.setVisibility(isEditItem ? View.GONE : View.VISIBLE);
+        //change UI when user edit item
+        if (isEditItem) {
+            btnSaveAndAddMore.setVisibility(View.GONE);
+            btnSave.setText(getString(R.string.update));
+            etValue.setText(itemValue);
+            actvCategory.setText(itemCategory);
+            etDetail.setText(itemDetail);
+            etDate.setText(itemDate);
+        }
     }
 
     private void handleTypeValue() {
@@ -218,7 +248,7 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
         if (categories != null) {
             CategoryAdapter categoryAdapter = new CategoryAdapter(this, R.layout.item_category, categories);
             actvCategory.setAdapter(categoryAdapter);
-            actvCategory.setText("");
+            actvCategory.setText(itemCategory);
             actvCategory.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -330,7 +360,11 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
             long createdTime = System.currentTimeMillis();
 
             Item item = new Item();
-            item.setId(AppUtil.createUniqueId());
+            if (TextUtils.isEmpty(itemId)) {
+                item.setId(AppUtil.createUniqueId());
+            } else {
+                item.setId(itemId);
+            }
             item.setValue(value);
             item.setDetail(detail);
             item.setItemType(itemType);
@@ -370,7 +404,24 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
 
     @Override
     public void saveItemSuccessful(Item item) {
-        setResult(HomeFragment.ADD_NEW_ITEM_RESULT);
+        if (!isEditItem) {
+            setResult(ADD_NEW_ITEM_RESULT);
+        } else {
+            Intent editData = new Intent();
+            if (!etValue.getText().toString().trim().equals(itemValue)) {
+                editData.putExtra(ITEM_VALUE, etValue.getText().toString().trim());
+            }
+            if (!actvCategory.getText().toString().trim().equals(itemCategory)) {
+                editData.putExtra(ITEM_CATEGORY, actvCategory.getText().toString().trim());
+            }
+            if (!etDetail.getText().toString().trim().equals(itemDetail)) {
+                editData.putExtra(ITEM_DETAIL, etDetail.getText().toString().trim());
+            }
+            if (!etDate.getText().toString().trim().equals(itemDate)) {
+                editData.putExtra(ITEM_DATE, etDate.getText().toString().trim());
+            }
+            setResult(EDIT_ITEM_RESULT, editData);
+        }
         callHideLoadingWithDelay();
     }
 

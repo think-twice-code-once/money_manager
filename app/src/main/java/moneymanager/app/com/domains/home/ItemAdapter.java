@@ -23,6 +23,7 @@ import moneymanager.app.com.util.AppUtil;
 import static moneymanager.app.com.util.Constants.ITEM_CATEGORY;
 import static moneymanager.app.com.util.Constants.ITEM_DATE;
 import static moneymanager.app.com.util.Constants.ITEM_DETAIL;
+import static moneymanager.app.com.util.Constants.ITEM_ID;
 import static moneymanager.app.com.util.Constants.ITEM_TYPE;
 import static moneymanager.app.com.util.Constants.ITEM_VALUE;
 
@@ -50,6 +51,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         Item item = items.get(position);
         Context context = holder.itemView.getContext();
 
+        //TODO: pay attention here: Realm still remain reference of Item, depends on addChangeListener
+
         holder.tvTime.setText(AppUtil.getDateStringFromMillisecond(item.getCreatedAt()));
         holder.tvValue.setText(AppUtil.getPrettyNumber(String.valueOf(item.getValue()), true));
         holder.tvCategory.setText(item.getCategory().getContent());
@@ -69,6 +72,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         holder.itemView.setOnClickListener(v ->
                 ItemDetailActivity_.intent(context)
                         .extra(ITEM_TYPE, item.getItemType())
+                        .extra(ITEM_ID, item.getId())
                         .extra(ITEM_VALUE, holder.tvValue.getText().toString())
                         .extra(ITEM_CATEGORY, holder.tvCategory.getText().toString())
                         .extra(ITEM_DETAIL, item.getDetail())
@@ -106,7 +110,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             tvCategory = (TextView) itemView.findViewById(R.id.item_tv_category);
             llContainer = (LinearLayout) itemView.findViewById(R.id.item_container);
             ivRightArrow = (ImageView) itemView.findViewById(R.id.item_iv_right_arrow);
-
         }
     }
 }

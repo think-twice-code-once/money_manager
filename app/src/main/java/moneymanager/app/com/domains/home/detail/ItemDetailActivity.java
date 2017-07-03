@@ -1,8 +1,10 @@
 package moneymanager.app.com.domains.home.detail;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +16,7 @@ import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
 
 import javax.inject.Inject;
@@ -24,10 +27,13 @@ import moneymanager.app.com.domains.home.add_item.AddItemActivity_;
 import moneymanager.app.com.factory.MainApplication;
 import moneymanager.app.com.models.ItemType;
 
+import static moneymanager.app.com.util.Constants.EDIT_ITEM_REQUEST;
+import static moneymanager.app.com.util.Constants.EDIT_ITEM_RESULT;
 import static moneymanager.app.com.util.Constants.IS_EDIT_ITEM;
 import static moneymanager.app.com.util.Constants.ITEM_CATEGORY;
 import static moneymanager.app.com.util.Constants.ITEM_DATE;
 import static moneymanager.app.com.util.Constants.ITEM_DETAIL;
+import static moneymanager.app.com.util.Constants.ITEM_ID;
 import static moneymanager.app.com.util.Constants.ITEM_TYPE;
 import static moneymanager.app.com.util.Constants.ITEM_VALUE;
 import static moneymanager.app.com.util.Constants.SCREEN_TITLE;
@@ -74,6 +80,9 @@ public class ItemDetailActivity extends BaseActivity<ItemDetailView, ItemDetailP
 
     @Extra(ITEM_TYPE)
     String itemType;
+
+    @Extra(ITEM_ID)
+    String itemId;
 
     @Extra(ITEM_VALUE)
     String itemValue;
@@ -151,7 +160,36 @@ public class ItemDetailActivity extends BaseActivity<ItemDetailView, ItemDetailP
                 .extra(SCREEN_TITLE, getTitle().toString())
                 .extra(ITEM_TYPE, itemType)
                 .extra(IS_EDIT_ITEM, true)
-                .start();
+                .extra(ITEM_ID, itemId)
+                .extra(ITEM_VALUE, itemValue)
+                .extra(ITEM_CATEGORY, itemCategory)
+                .extra(ITEM_DETAIL, itemDetail)
+                .extra(ITEM_DATE, itemDate)
+                .startForResult(EDIT_ITEM_REQUEST);
+    }
+
+    @OnActivityResult(EDIT_ITEM_REQUEST)
+    void onEditResult(int resultCode, Intent data) {
+        if (resultCode == EDIT_ITEM_RESULT) {
+            if (data != null) {
+                String value = data.getStringExtra(ITEM_VALUE);
+                String category = data.getStringExtra(ITEM_CATEGORY);
+                String detail = data.getStringExtra(ITEM_DETAIL);
+                String date = data.getStringExtra(ITEM_DATE);
+                if (!TextUtils.isEmpty(value)) {
+                    tvValue.setText(value);
+                }
+                if (!TextUtils.isEmpty(category)) {
+                    tvCategory.setText(category);
+                }
+                if (!TextUtils.isEmpty(detail)) {
+                    tvDetail.setText(detail);
+                }
+                if (!TextUtils.isEmpty(date)) {
+                    tvDate.setText(date);
+                }
+            }
+        }
     }
 
 }

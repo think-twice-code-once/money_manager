@@ -28,6 +28,8 @@ import moneymanager.app.com.models.Item;
 import moneymanager.app.com.models.ItemType;
 import moneymanager.app.com.util.AppUtil;
 
+import static moneymanager.app.com.util.Constants.ADD_NEW_ITEM_REQUEST;
+import static moneymanager.app.com.util.Constants.ADD_NEW_ITEM_RESULT;
 import static moneymanager.app.com.util.Constants.ITEM_TYPE;
 import static moneymanager.app.com.util.Constants.SCREEN_TITLE;
 
@@ -37,9 +39,6 @@ import static moneymanager.app.com.util.Constants.SCREEN_TITLE;
 
 @EFragment(R.layout.fragment_home)
 public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView {
-
-    public static final int ADD_NEW_ITEM_REQUEST = 111;
-    public static final int ADD_NEW_ITEM_RESULT= 112;
 
     @ViewById(R.id.fragment_home_rv_history)
     RecyclerView rvHistory;

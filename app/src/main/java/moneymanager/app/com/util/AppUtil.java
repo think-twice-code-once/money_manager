@@ -32,7 +32,8 @@ public class AppUtil {
 
     public static String getPrettyNumber(String valueStr, boolean isRemovedDotZero) {
         DecimalFormat decimalFormat = new DecimalFormat("########################.#####");
-        valueStr = decimalFormat.format(Double.parseDouble(valueStr.replace(" ", "")));
+        valueStr = decimalFormat.format(Double.parseDouble(valueStr.replace(" ", "").replace(",", ".")));
+        valueStr = valueStr.replace(",", ".");
         String prettyNumberStr = "";
 
         int count = 0;

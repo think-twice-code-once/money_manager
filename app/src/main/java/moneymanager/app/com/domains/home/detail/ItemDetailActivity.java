@@ -1,5 +1,6 @@
 package moneymanager.app.com.domains.home.detail;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -27,6 +29,7 @@ import moneymanager.app.com.domains.home.add_item.AddItemActivity_;
 import moneymanager.app.com.factory.MainApplication;
 import moneymanager.app.com.models.ItemType;
 
+import static moneymanager.app.com.util.Constants.DELETE_ITEM_RESULT;
 import static moneymanager.app.com.util.Constants.EDIT_ITEM_REQUEST;
 import static moneymanager.app.com.util.Constants.EDIT_ITEM_RESULT;
 import static moneymanager.app.com.util.Constants.IS_EDIT_ITEM;
@@ -95,6 +98,8 @@ public class ItemDetailActivity extends BaseActivity<ItemDetailView, ItemDetailP
 
     @Extra(ITEM_DATE)
     String itemDate;
+
+    private ProgressDialog progressDialog;
 
     @AfterInject
     void afterInject() {
@@ -168,6 +173,13 @@ public class ItemDetailActivity extends BaseActivity<ItemDetailView, ItemDetailP
                 .startForResult(EDIT_ITEM_REQUEST);
     }
 
+    @Click(R.id.activity_item_detail_btn_delete)
+    void clickDelete() {
+        ConfirmDeleteDialog confirmDeleteDialog = new ConfirmDeleteDialog_();
+        confirmDeleteDialog.setOnDeleteListener(() -> presenter.deleteItem(itemId));
+        confirmDeleteDialog.show(getSupportFragmentManager(), ConfirmDeleteDialog.class.getSimpleName());
+    }
+
     @OnActivityResult(EDIT_ITEM_REQUEST)
     void onEditResult(int resultCode, Intent data) {
         if (resultCode == EDIT_ITEM_RESULT) {
@@ -189,7 +201,18 @@ public class ItemDetailActivity extends BaseActivity<ItemDetailView, ItemDetailP
                     tvDate.setText(date);
                 }
             }
+            setResult(EDIT_ITEM_RESULT);
         }
     }
 
+    @Override
+    public void deleteItemSuccessful() {
+        setResult(DELETE_ITEM_RESULT);
+        finish();
+    }
+
+    @Override
+    public void deleteItemFailed(Throwable throwable) {
+        Toast.makeText(application, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+    }
 }

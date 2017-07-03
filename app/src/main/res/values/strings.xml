@@ -38,4 +38,7 @@
     <string name="date_detail">Date</string>
     <string name="not_specified">Not specified</string>
     <string name="update">Update</string>
+    <string name="deleting">Deleting&#8230;</string>
+    <string name="confirm_delete">Are you sure you want to delete this item?</string>
+    <string name="ok">OK</string>
 </resources>

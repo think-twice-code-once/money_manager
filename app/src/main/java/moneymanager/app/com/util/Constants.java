@@ -19,4 +19,5 @@ public class Constants {
     public static final int ADD_NEW_ITEM_RESULT = 112;
     public static final int EDIT_ITEM_REQUEST = 113;
     public static final int EDIT_ITEM_RESULT = 114;
+    public static final int DELETE_ITEM_RESULT = 115;
 }

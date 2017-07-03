@@ -30,6 +30,9 @@ import moneymanager.app.com.util.AppUtil;
 
 import static moneymanager.app.com.util.Constants.ADD_NEW_ITEM_REQUEST;
 import static moneymanager.app.com.util.Constants.ADD_NEW_ITEM_RESULT;
+import static moneymanager.app.com.util.Constants.DELETE_ITEM_RESULT;
+import static moneymanager.app.com.util.Constants.EDIT_ITEM_REQUEST;
+import static moneymanager.app.com.util.Constants.EDIT_ITEM_RESULT;
 import static moneymanager.app.com.util.Constants.ITEM_TYPE;
 import static moneymanager.app.com.util.Constants.SCREEN_TITLE;
 
@@ -89,7 +92,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
                 LinearLayoutManager.VERTICAL, false);
         rvHistory.setLayoutManager(layoutManager);
 
-        itemAdapter = new ItemAdapter();
+        itemAdapter = new ItemAdapter(this);
         rvHistory.setAdapter(itemAdapter);
 
         presenter.getAllItems();
@@ -120,9 +123,16 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         }
     }
 
+    @OnActivityResult(EDIT_ITEM_REQUEST)
+    void onEditResult(int resultCode) {
+        if (resultCode == EDIT_ITEM_RESULT || resultCode == DELETE_ITEM_RESULT) {
+            presenter.getAllItems();
+        }
+    }
+
     @Override
     public void getAllItemsSuccessful(List<Item> items) {
-        if (items.size() > 0) {
+         if (items.size() > 0) {
             tvPrompt.setVisibility(View.GONE);
         }
         itemAdapter.clear();

@@ -7,4 +7,9 @@ import com.hannesdorfmann.mosby.mvp.MvpView;
  */
 
 public interface ItemDetailView extends MvpView {
+
+    void deleteItemSuccessful();
+
+    void deleteItemFailed(Throwable throwable);
+
 }

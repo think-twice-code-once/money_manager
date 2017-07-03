@@ -2,6 +2,7 @@ package moneymanager.app.com.domains.home;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import moneymanager.app.com.models.Item;
 import moneymanager.app.com.models.ItemType;
 import moneymanager.app.com.util.AppUtil;
 
+import static moneymanager.app.com.util.Constants.EDIT_ITEM_REQUEST;
 import static moneymanager.app.com.util.Constants.ITEM_CATEGORY;
 import static moneymanager.app.com.util.Constants.ITEM_DATE;
 import static moneymanager.app.com.util.Constants.ITEM_DETAIL;
@@ -33,9 +35,11 @@ import static moneymanager.app.com.util.Constants.ITEM_VALUE;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
+    private Fragment previousScreen;
     private List<Item> items;
 
-    public ItemAdapter() {
+    public ItemAdapter(Fragment previousScreen) {
+        this.previousScreen = previousScreen;
         items = new ArrayList<>();
     }
 
@@ -70,14 +74,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 : ContextCompat.getDrawable(context, R.drawable.selector_right_arrow_green_white));
 
         holder.itemView.setOnClickListener(v ->
-                ItemDetailActivity_.intent(context)
+                ItemDetailActivity_.intent(previousScreen)
                         .extra(ITEM_TYPE, item.getItemType())
                         .extra(ITEM_ID, item.getId())
                         .extra(ITEM_VALUE, holder.tvValue.getText().toString())
                         .extra(ITEM_CATEGORY, holder.tvCategory.getText().toString())
                         .extra(ITEM_DETAIL, item.getDetail())
                         .extra(ITEM_DATE, holder.tvTime.getText().toString())
-                        .start());
+                        .startForResult(EDIT_ITEM_REQUEST));
     }
 
     @Override

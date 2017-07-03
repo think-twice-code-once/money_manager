@@ -44,7 +44,8 @@ public class PromptBalanceDialog extends DialogFragment {
     void init () {
         tvBalance.setText(balance);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            tvBalancePrompt.setText(Html.fromHtml(getString(R.string.balance_prompt), Html.FROM_HTML_MODE_LEGACY));
+            tvBalancePrompt.setText(Html.fromHtml(getString(R.string.balance_prompt),
+                    Html.FROM_HTML_MODE_LEGACY));
         } else {
             tvBalancePrompt.setText(Html.fromHtml(getString(R.string.balance_prompt)));
         }

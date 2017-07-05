@@ -1,9 +1,11 @@
 package moneymanager.app.com.domains.home;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ import javax.inject.Inject;
 
 import moneymanager.app.com.R;
 import moneymanager.app.com.domains.home.add_item.AddItemActivity_;
+import moneymanager.app.com.domains.home.add_item.CustomDatePicker;
 import moneymanager.app.com.factory.MainApplication;
 import moneymanager.app.com.models.Item;
 import moneymanager.app.com.models.ItemType;
@@ -71,6 +74,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     HomePresenter presenter;
 
     private ItemAdapter itemAdapter;
+    private String previousFilterType;
 
     @AfterInject
     void afterInject() {
@@ -107,10 +111,108 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     }
 
     private void initFilter() {
-        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.item_filters, android.R.layout.simple_spinner_item);
+        Context context = getContext();
+        previousFilterType = FilterType.LIFE_TIME.getString(context);
+        String[] itemFilters = {FilterType.TODAY.getString(context), FilterType.YESTERDAY.getString(context),
+                FilterType.PICK_A_DAY.getString(context), FilterType.THIS_WEEK.getString(context),
+                FilterType.THIS_MONTH.getString(context), FilterType.THIS_YEAR.getString(context),
+                FilterType.RANGE.getString(context), FilterType.LIFE_TIME.getString(context)};
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_item, itemFilters);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sFilter.setAdapter(spinnerAdapter);
+        sFilter.setSelection(sFilter.getCount() - 1);
+        sFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String valueOfSelectedItem = itemFilters[position];
+                if (!previousFilterType.equals(valueOfSelectedItem)
+                        && !previousFilterType.equals(FilterType.PICK_A_DAY.getString(context))) {
+                    previousFilterType = valueOfSelectedItem;
+                    Toast.makeText(context, valueOfSelectedItem, Toast.LENGTH_SHORT).show();
+                    if (valueOfSelectedItem.equals(FilterType.TODAY.getString(context))) {
+                        getFilteredItems(FilterType.TODAY);
+                    }  else if (valueOfSelectedItem.equals(FilterType.YESTERDAY.getString(context))) {
+                        getFilteredItems(FilterType.YESTERDAY);
+                    } else if (valueOfSelectedItem.equals(FilterType.PICK_A_DAY.getString(context))) {
+                        getFilteredItems(FilterType.PICK_A_DAY);
+                    } else if (valueOfSelectedItem.equals(FilterType.THIS_WEEK.getString(context))) {
+                        getFilteredItems(FilterType.THIS_WEEK);
+                    } else if (valueOfSelectedItem.equals(FilterType.THIS_MONTH.getString(context))) {
+                        getFilteredItems(FilterType.THIS_MONTH);
+                    } else if (valueOfSelectedItem.equals(FilterType.THIS_YEAR.getString(context))) {
+                        getFilteredItems(FilterType.THIS_YEAR);
+                    } else if (valueOfSelectedItem.equals(FilterType.RANGE.getString(context))) {
+                        getFilteredItems(FilterType.RANGE);
+                    } else { //LIFETIME
+                        getFilteredItems(FilterType.LIFE_TIME);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void getFilteredItems(FilterType filterType) {
+        Calendar calendar = Calendar.getInstance();
+        switch (filterType) {
+            case TODAY:
+                calendar.set(Calendar.HOUR_OF_DAY, 0);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                long fromCreatedTime = calendar.getTimeInMillis();
+                calendar.set(Calendar.HOUR_OF_DAY, 23);
+                calendar.set(Calendar.MINUTE, 59);
+                calendar.set(Calendar.SECOND, 59);
+                long toCreatedTime = calendar.getTimeInMillis();
+                presenter.getItems(fromCreatedTime, toCreatedTime);
+                break;
+            case YESTERDAY:
+                calendar.add(Calendar.DATE, -1);
+                calendar.set(Calendar.HOUR_OF_DAY, 0);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                fromCreatedTime = calendar.getTimeInMillis();
+                calendar.set(Calendar.HOUR_OF_DAY, 23);
+                calendar.set(Calendar.MINUTE, 59);
+                calendar.set(Calendar.SECOND, 59);
+                toCreatedTime = calendar.getTimeInMillis();
+                presenter.getItems(fromCreatedTime, toCreatedTime);
+                break;
+            case PICK_A_DAY:
+                CustomDatePicker customDatePicker = new CustomDatePicker();
+                customDatePicker.setItemType(ItemType.INCOME.toString());
+                customDatePicker.setShouldPickTime(false);
+                customDatePicker.setOnSelectDateTimeListener(createdTime -> {
+                    calendar.setTimeInMillis(createdTime);
+                    calendar.set(Calendar.HOUR_OF_DAY, 0);
+                    calendar.set(Calendar.MINUTE, 0);
+                    calendar.set(Calendar.SECOND, 0);
+                    long fromTime = calendar.getTimeInMillis();
+                    calendar.set(Calendar.HOUR_OF_DAY, 23);
+                    calendar.set(Calendar.MINUTE, 59);
+                    calendar.set(Calendar.SECOND, 59);
+                    long toTime = calendar.getTimeInMillis();
+                    presenter.getItems(fromTime, toTime);
+                });
+                customDatePicker.show(getFragmentManager(), CustomDatePicker.class.getSimpleName());
+                break;
+            case THIS_WEEK:
+                break;
+            case THIS_MONTH:
+                break;
+            case THIS_YEAR:
+                break;
+            case RANGE:
+                break;
+            default:
+                presenter.getAllItems();
+                break;
+        }
     }
 
     @Click(R.id.fragment_home_fab_add_income)
@@ -135,6 +237,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     void onResult(int resultCode) {
         if (resultCode == ADD_NEW_ITEM_RESULT) {
             presenter.getAllItems();
+            sFilter.setSelection(sFilter.getCount() - 1);
         }
     }
 
@@ -142,24 +245,19 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     void onEditResult(int resultCode) {
         if (resultCode == EDIT_ITEM_RESULT || resultCode == DELETE_ITEM_RESULT) {
             presenter.getAllItems();
+            sFilter.setSelection(sFilter.getCount() - 1);
         }
     }
 
     @Override
-    public void getAllItemsSuccessful(List<Item> items) {
-         if (items.size() > 0) {
+    public void getItemsSuccessful(List<Item> items) {
+        if (items.size() > 0) {
             tvPrompt.setVisibility(View.GONE);
         }
         itemAdapter.clear();
         itemAdapter.addAll(items);
         rvHistory.scrollToPosition(0);
         calculateBalance(items);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(items.get(2).getCreatedAt());
-        String dateStr = calendar.getTime().toString();
-        calendar.setTimeInMillis(items.get(4).getCreatedAt());
-        dateStr = calendar.getTime().toString();
-        int i = 0;
     }
 
     private void calculateBalance(List<Item> items) {
@@ -178,7 +276,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     }
 
     @Override
-    public void getAllItemsFailed(Throwable throwable) {
+    public void getItemsFailed(Throwable throwable) {
         Toast.makeText(application, throwable.getMessage(), Toast.LENGTH_LONG).show();
     }
 

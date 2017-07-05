@@ -166,10 +166,6 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
         handleTyingDate();
 
         presenter.getAllCategories(itemType);
-
-        int a = 1000001;
-        int b = (int) Math.sqrt(a) * (int) Math.sqrt(a);
-        int n  = 0;
     }
 
     private void initValidator() {

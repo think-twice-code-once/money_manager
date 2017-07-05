@@ -20,6 +20,7 @@ public class CustomDatePicker extends DialogFragment implements DatePickerDialog
     private String itemType;
     private OnSelectDateTimeListener onSelectDateTimeListener;
     private int theme;
+    private boolean shouldPickTime = true;
 
     public void setItemType(String itemType) {
         this.itemType = itemType;
@@ -27,6 +28,10 @@ public class CustomDatePicker extends DialogFragment implements DatePickerDialog
 
     public void setOnSelectDateTimeListener(OnSelectDateTimeListener onSelectDateTimeListener) {
         this.onSelectDateTimeListener = onSelectDateTimeListener;
+    }
+
+    public void setShouldPickTime(boolean shouldPickTime) {
+        this.shouldPickTime = shouldPickTime;
     }
 
     @NonNull
@@ -46,10 +51,16 @@ public class CustomDatePicker extends DialogFragment implements DatePickerDialog
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, dayOfMonth);
 
-        CustomTimePicker customTimePicker = new CustomTimePicker();
-        customTimePicker.setTheme(theme);
-        customTimePicker.setDefaultTime(calendar);
-        customTimePicker.setOnSelectDateTimeListener(onSelectDateTimeListener);
-        customTimePicker.show(getFragmentManager(), CustomTimePicker.class.getSimpleName());
+        if (shouldPickTime) {
+            CustomTimePicker customTimePicker = new CustomTimePicker();
+            customTimePicker.setTheme(theme);
+            customTimePicker.setDefaultTime(calendar);
+            customTimePicker.setOnSelectDateTimeListener(onSelectDateTimeListener);
+            customTimePicker.show(getFragmentManager(), CustomTimePicker.class.getSimpleName());
+        } else {
+            if (onSelectDateTimeListener != null) {
+                onSelectDateTimeListener.onSelectDate(calendar.getTimeInMillis());
+            }
+        }
     }
 }

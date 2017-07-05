@@ -12,7 +12,7 @@ import moneymanager.app.com.models.Item;
 
 public interface HomeView extends MvpView {
 
-    void getAllItemsSuccessful(List<Item> items);
+    void getItemsSuccessful(List<Item> items);
 
-    void getAllItemsFailed(Throwable throwable);
+    void getItemsFailed(Throwable throwable);
 }

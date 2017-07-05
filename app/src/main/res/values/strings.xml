@@ -42,13 +42,13 @@
     <string name="confirm_delete">Are you sure you want to delete this item?</string>
     <string name="ok">OK</string>
     <string name="select_time">Select time</string>
-    <string-array name="item_filters">
-        <item>Today</item>
-        <item>Yesterday</item>
-        <item>This week</item>
-        <item>This month</item>
-        <item>This year</item>
-        <item>Custom</item>
-        <item>Lifetime</item>
-    </string-array>
+    <!--Filter type-->
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="pick_a_day">Pick a day</string>
+    <string name="this_week">This week</string>
+    <string name="this_month">This month</string>
+    <string name="this_year">This year</string>
+    <string name="range">Range</string>
+    <string name="lifetime">Lifetime</string>
 </resources>

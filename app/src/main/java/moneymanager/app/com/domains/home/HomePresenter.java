@@ -34,11 +34,31 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
                                         -> compareTo(item2.getCreatedAt(), item1.getCreatedAt()))
                                 .subscribe(items -> {
                                     if (getView() != null) {
-                                        getView().getAllItemsSuccessful(items);
+                                        getView().getItemsSuccessful(items);
                                     }
                                 }, throwable -> {
                                     if (getView() != null) {
-                                        getView().getAllItemsFailed(throwable);
+                                        getView().getItemsFailed(throwable);
+                                    }
+                                }));
+    }
+
+    public void getItems(long fromCreatedTime, long toCreatedTime) {
+        realm.where(Item.class)
+                .greaterThan("createdAt", fromCreatedTime)
+                .lessThan("createdAt", toCreatedTime)
+                .findAllAsync()
+                .addChangeListener(realmResultsItems ->
+                        Observable.from(realmResultsItems)
+                                .toSortedList((item1, item2)
+                                        -> compareTo(item2.getCreatedAt(), item1.getCreatedAt()))
+                                .subscribe(items -> {
+                                    if (getView() != null) {
+                                        getView().getItemsSuccessful(items);
+                                    }
+                                }, throwable -> {
+                                    if (getView() != null) {
+                                        getView().getItemsFailed(throwable);
                                     }
                                 }));
     }

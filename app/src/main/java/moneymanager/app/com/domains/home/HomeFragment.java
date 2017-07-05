@@ -127,7 +127,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String valueOfSelectedItem = itemFilters[position];
                 if (!previousFilterType.equals(valueOfSelectedItem)
-                        && !previousFilterType.equals(FilterType.PICK_A_DAY.getString(context))) {
+                        || previousFilterType.equals(FilterType.PICK_A_DAY.getString(context))) {
                     previousFilterType = valueOfSelectedItem;
                     Toast.makeText(context, valueOfSelectedItem, Toast.LENGTH_SHORT).show();
                     if (valueOfSelectedItem.equals(FilterType.TODAY.getString(context))) {

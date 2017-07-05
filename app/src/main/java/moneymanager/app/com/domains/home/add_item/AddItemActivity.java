@@ -166,6 +166,10 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
         handleTyingDate();
 
         presenter.getAllCategories(itemType);
+
+        int a = 1000001;
+        int b = (int) Math.sqrt(a) * (int) Math.sqrt(a);
+        int n  = 0;
     }
 
     private void initValidator() {
@@ -248,8 +252,8 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
         hideKeyboard(tvDate);
         CustomDatePicker datePicker = new CustomDatePicker();
         datePicker.setItemType(itemType);
-        datePicker.setOnSelectDateListener(createdTime -> {
-            tvDate.setText(AppUtil.getDateStringFromMillisecond(createdTime));
+        datePicker.setOnSelectDateTimeListener(createdTime -> {
+            tvDate.setText(AppUtil.getDateTimeStringFromMillisecond(createdTime));
             AddItemActivity.this.createdTime = createdTime;
         });
         datePicker.show(getSupportFragmentManager(), CustomDatePicker.class.getSimpleName());

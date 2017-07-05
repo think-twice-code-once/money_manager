@@ -84,7 +84,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/fragment_home_fab_add_income"
+        android:layout_above="@+id/fragment_home_ll_bottom"
         android:layout_below="@+id/fragment_home_ll_pay_earn"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
@@ -113,26 +113,58 @@
 
     </FrameLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fragment_home_fab_add_income"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/fragment_home_ll_bottom"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/colorPrimary"
-        app:rippleColor="@color/colorPrimaryDark"
-        app:useCompatPadding="true"/>
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fragment_home_fab_add_payment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/orange"
-        app:rippleColor="@color/orange_dark"
-        app:useCompatPadding="true"/>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fragment_home_fab_add_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            app:backgroundTint="@color/orange"
+            app:rippleColor="@color/orange_dark"
+            app:useCompatPadding="true"/>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/fragment_home_s_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:background="@color/grey_opacity"
+                />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="end|center_vertical"
+                android:src="@drawable/ic_down_arrow"
+                android:layout_marginEnd="5dp"
+                tools:ignore="ContentDescription"/>
+
+        </FrameLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fragment_home_fab_add_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            app:backgroundTint="@color/colorPrimary"
+            app:rippleColor="@color/colorPrimaryDark"
+            app:useCompatPadding="true"/>
+
+
+    </LinearLayout>
+
 
 </RelativeLayout>

@@ -31,7 +31,7 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
                 .addChangeListener(realmResultsItems ->
                         Observable.from(realmResultsItems)
                                 .toSortedList((item1, item2)
-                                        -> (int) (item2.getCreatedAt() - item1.getCreatedAt()))
+                                        -> compareTo(item2.getCreatedAt(), item1.getCreatedAt()))
                                 .subscribe(items -> {
                                     if (getView() != null) {
                                         getView().getAllItemsSuccessful(items);
@@ -41,6 +41,10 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
                                         getView().getAllItemsFailed(throwable);
                                     }
                                 }));
+    }
+
+    private int compareTo(long value1, long value2) {
+        return (value1 < value2) ? -1 : ((value1 == value2) ? 0 : 1);
     }
 
     public void initDefaultCategories() {

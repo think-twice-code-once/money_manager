@@ -8,12 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="GreenDatePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+    <style name="GreenDateTimePickerTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:windowBackground">@color/transparent</item>
     </style>
 
-    <style name="OrangeDatePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+    <style name="OrangeDateTimePickerTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/orange</item>
         <item name="android:windowBackground">@color/transparent</item>
     </style>

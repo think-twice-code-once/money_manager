@@ -1,11 +1,11 @@
 <resources>
 
-    <style name="GreenDatePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+    <style name="GreenDateTimePickerTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:windowBackground">@color/grey_2</item>
     </style>
 
-    <style name="OrangeDatePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+    <style name="OrangeDateTimePickerTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/orange</item>
         <item name="android:windowBackground">@color/grey_2</item>
     </style>

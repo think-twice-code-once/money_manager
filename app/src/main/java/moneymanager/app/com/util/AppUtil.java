@@ -30,6 +30,13 @@ public class AppUtil {
         return simpleDateFormat.format(calendar.getTime());
     }
 
+    public static String getDateTimeStringFromMillisecond(long createdAt) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yy, HH:mm", Locale.getDefault());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(createdAt);
+        return simpleDateFormat.format(calendar.getTime());
+    }
+
     public static String getPrettyNumber(String valueStr, boolean isRemovedDotZero) {
         DecimalFormat decimalFormat = new DecimalFormat("########################.#####");
         valueStr = decimalFormat.format(Double.parseDouble(valueStr.replace(" ", "").replace(",", ".")));

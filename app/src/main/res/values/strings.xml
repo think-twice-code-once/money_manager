@@ -41,4 +41,14 @@
     <string name="deleting">Deleting&#8230;</string>
     <string name="confirm_delete">Are you sure you want to delete this item?</string>
     <string name="ok">OK</string>
+    <string name="select_time">Select time</string>
+    <string-array name="item_filters">
+        <item>Today</item>
+        <item>Yesterday</item>
+        <item>This week</item>
+        <item>This month</item>
+        <item>This year</item>
+        <item>Custom</item>
+        <item>Lifetime</item>
+    </string-array>
 </resources>

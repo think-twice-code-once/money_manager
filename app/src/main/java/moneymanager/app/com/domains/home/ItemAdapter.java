@@ -80,7 +80,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                         .extra(ITEM_VALUE, holder.tvValue.getText().toString())
                         .extra(ITEM_CATEGORY, holder.tvCategory.getText().toString())
                         .extra(ITEM_DETAIL, item.getDetail())
-                        .extra(ITEM_DATE, holder.tvTime.getText().toString())
+                        .extra(ITEM_DATE, AppUtil.getDateTimeStringFromMillisecond(item.getCreatedAt()))
                         .startForResult(EDIT_ITEM_REQUEST));
     }
 

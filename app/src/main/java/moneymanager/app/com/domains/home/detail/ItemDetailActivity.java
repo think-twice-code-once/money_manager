@@ -1,6 +1,5 @@
 package moneymanager.app.com.domains.home.detail;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.support.annotation.NonNull;
@@ -98,8 +97,6 @@ public class ItemDetailActivity extends BaseActivity<ItemDetailView, ItemDetailP
 
     @Extra(ITEM_DATE)
     String itemDate;
-
-    private ProgressDialog progressDialog;
 
     @AfterInject
     void afterInject() {

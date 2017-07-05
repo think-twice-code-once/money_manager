@@ -18,15 +18,17 @@ import moneymanager.app.com.models.ItemType;
 public class CustomDatePicker extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
     private String itemType;
-    private OnSelectDateListener onSelectDateListener;
+    private OnSelectDateTimeListener onSelectDateTimeListener;
+    private int theme;
 
     public void setItemType(String itemType) {
         this.itemType = itemType;
     }
 
-    public void setOnSelectDateListener(OnSelectDateListener onSelectDateListener) {
-        this.onSelectDateListener = onSelectDateListener;
+    public void setOnSelectDateTimeListener(OnSelectDateTimeListener onSelectDateTimeListener) {
+        this.onSelectDateTimeListener = onSelectDateTimeListener;
     }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -34,8 +36,8 @@ public class CustomDatePicker extends DialogFragment implements DatePickerDialog
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH);
         int year = calendar.get(Calendar.YEAR);
-        int theme = ItemType.INCOME.toString().equals(itemType)
-                ? R.style.GreenDatePickerTheme : R.style.OrangeDatePickerTheme;
+        theme = ItemType.INCOME.toString().equals(itemType)
+                ? R.style.GreenDateTimePickerTheme : R.style.OrangeDateTimePickerTheme;
         return new DatePickerDialog(getActivity(), theme, this, year, month, day);
     }
 
@@ -43,12 +45,11 @@ public class CustomDatePicker extends DialogFragment implements DatePickerDialog
     public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, dayOfMonth);
-        if (onSelectDateListener  != null) {
-            onSelectDateListener.onSelectDate(calendar.getTimeInMillis());
-        }
-    }
 
-    public interface OnSelectDateListener {
-       void onSelectDate(long createdTime);
+        CustomTimePicker customTimePicker = new CustomTimePicker();
+        customTimePicker.setTheme(theme);
+        customTimePicker.setDefaultTime(calendar);
+        customTimePicker.setOnSelectDateTimeListener(onSelectDateTimeListener);
+        customTimePicker.show(getFragmentManager(), CustomTimePicker.class.getSimpleName());
     }
 }

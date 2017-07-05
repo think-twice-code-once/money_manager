@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +19,7 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -58,6 +61,9 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     @ViewById(R.id.fragment_home_tv_balance)
     TextView tvBalance;
 
+    @ViewById(R.id.fragment_home_s_filter)
+    Spinner sFilter;
+
     @App
     MainApplication application;
 
@@ -85,6 +91,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         getHistoryList();
 
         presenter.initDefaultCategories();
+
+        initFilter();
     }
 
     private void getHistoryList() {
@@ -96,6 +104,13 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         rvHistory.setAdapter(itemAdapter);
 
         presenter.getAllItems();
+    }
+
+    private void initFilter() {
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.item_filters, android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sFilter.setAdapter(spinnerAdapter);
     }
 
     @Click(R.id.fragment_home_fab_add_income)
@@ -139,6 +154,12 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         itemAdapter.addAll(items);
         rvHistory.scrollToPosition(0);
         calculateBalance(items);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(items.get(2).getCreatedAt());
+        String dateStr = calendar.getTime().toString();
+        calendar.setTimeInMillis(items.get(4).getCreatedAt());
+        dateStr = calendar.getTime().toString();
+        int i = 0;
     }
 
     private void calculateBalance(List<Item> items) {

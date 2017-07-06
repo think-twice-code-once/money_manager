@@ -84,7 +84,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/fragment_home_ll_bottom"
+        android:layout_above="@+id/fragment_home_ll_range"
         android:layout_below="@+id/fragment_home_ll_pay_earn"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
@@ -114,6 +114,61 @@
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/fragment_home_ll_range"
+        android:layout_above="@+id/fragment_home_ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_opacity"
+            android:text="@string/from"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/fragment_home_tv_range_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_2"
+            android:textStyle="bold"
+            android:text="Range"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            tools:ignore="HardcodedText"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_opacity"
+            android:text="@string/to"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/fragment_home_tv_range_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_2"
+            android:textStyle="bold"
+            android:text="Range"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            tools:ignore="HardcodedText"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/fragment_home_ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -127,30 +182,23 @@
             android:src="@drawable/ic_add"
             app:backgroundTint="@color/orange"
             app:rippleColor="@color/orange_dark"
+            app:fabSize="mini"
             app:useCompatPadding="true"/>
 
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/grey_opacity">
 
-            <Spinner
+            <moneymanager.app.com.domains.home.CustomSpinner
                 android:id="@+id/fragment_home_s_filter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:background="@color/grey_opacity"
                 />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="end|center_vertical"
-                android:src="@drawable/ic_down_arrow"
-                android:layout_marginEnd="5dp"
-                tools:ignore="ContentDescription"/>
 
         </FrameLayout>
 
@@ -161,10 +209,9 @@
             android:src="@drawable/ic_add"
             app:backgroundTint="@color/colorPrimary"
             app:rippleColor="@color/colorPrimaryDark"
+            app:fabSize="mini"
             app:useCompatPadding="true"/>
 
-
     </LinearLayout>
-
 
 </RelativeLayout>

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
 
 import java.util.Calendar;
 
@@ -21,6 +22,11 @@ public class CustomDatePicker extends DialogFragment implements DatePickerDialog
     private OnSelectDateTimeListener onSelectDateTimeListener;
     private int theme;
     private boolean shouldPickTime = true;
+    private String title;
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public void setItemType(String itemType) {
         this.itemType = itemType;
@@ -43,7 +49,14 @@ public class CustomDatePicker extends DialogFragment implements DatePickerDialog
         int year = calendar.get(Calendar.YEAR);
         theme = ItemType.INCOME.toString().equals(itemType)
                 ? R.style.GreenDateTimePickerTheme : R.style.OrangeDateTimePickerTheme;
-        return new DatePickerDialog(getActivity(), theme, this, year, month, day);
+        DatePickerDialog datePickerDialog;
+        if (!TextUtils.isEmpty(title)) {
+            datePickerDialog = new ImmutableTitleDatePickerDialog(getActivity(), theme, this, year, month, day);
+            ((ImmutableTitleDatePickerDialog)datePickerDialog).setImmutableTitle(title);
+        } else {
+            datePickerDialog = new DatePickerDialog(getActivity(), theme, this, year, month, day);
+        }
+        return datePickerDialog;
     }
 
     @Override
@@ -63,4 +76,5 @@ public class CustomDatePicker extends DialogFragment implements DatePickerDialog
             }
         }
     }
+
 }

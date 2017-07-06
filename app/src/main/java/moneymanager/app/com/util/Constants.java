@@ -8,6 +8,7 @@ public class Constants {
     public static final String SCREEN_TITLE = "screen_title";
     public static final String ITEM_TYPE = "screen_type";
     public static final String ITEM_ID = "item_id";
+    public static final String ITEM_CREATED_TIME = "item_created_time";
     public static final String ITEM_VALUE = "item_value";
     public static final String ITEM_CATEGORY = "item_category";
     public static final String ITEM_DETAIL = "item_detail";

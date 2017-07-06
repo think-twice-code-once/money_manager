@@ -23,6 +23,7 @@ import moneymanager.app.com.util.AppUtil;
 
 import static moneymanager.app.com.util.Constants.EDIT_ITEM_REQUEST;
 import static moneymanager.app.com.util.Constants.ITEM_CATEGORY;
+import static moneymanager.app.com.util.Constants.ITEM_CREATED_TIME;
 import static moneymanager.app.com.util.Constants.ITEM_DATE;
 import static moneymanager.app.com.util.Constants.ITEM_DETAIL;
 import static moneymanager.app.com.util.Constants.ITEM_ID;
@@ -77,6 +78,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 ItemDetailActivity_.intent(previousScreen)
                         .extra(ITEM_TYPE, item.getItemType())
                         .extra(ITEM_ID, item.getId())
+                        .extra(ITEM_CREATED_TIME, item.getCreatedAt())
                         .extra(ITEM_VALUE, holder.tvValue.getText().toString())
                         .extra(ITEM_CATEGORY, holder.tvCategory.getText().toString())
                         .extra(ITEM_DETAIL, item.getDetail())

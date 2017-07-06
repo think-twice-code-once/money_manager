@@ -1,6 +1,5 @@
 package moneymanager.app.com.domains.home.add_item;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Handler;
@@ -49,6 +48,7 @@ import static moneymanager.app.com.util.Constants.ADD_NEW_ITEM_RESULT;
 import static moneymanager.app.com.util.Constants.EDIT_ITEM_RESULT;
 import static moneymanager.app.com.util.Constants.IS_EDIT_ITEM;
 import static moneymanager.app.com.util.Constants.ITEM_CATEGORY;
+import static moneymanager.app.com.util.Constants.ITEM_CREATED_TIME;
 import static moneymanager.app.com.util.Constants.ITEM_DATE;
 import static moneymanager.app.com.util.Constants.ITEM_DETAIL;
 import static moneymanager.app.com.util.Constants.ITEM_ID;
@@ -120,6 +120,9 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
     @Extra(ITEM_ID)
     String itemId;
 
+    @Extra(ITEM_CREATED_TIME)
+    long itemCreatedTime = -1;
+
     @Extra(ITEM_VALUE)
     String itemValue;
 
@@ -135,9 +138,7 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
     private Validator validator;
 
     private boolean addMore;
-    private ProgressDialog progressDialog;
     private TextWatcher textWatcher;
-    private long createdTime = -1;
 
     @NonNull
     @Override
@@ -250,7 +251,7 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
         datePicker.setItemType(itemType);
         datePicker.setOnSelectDateTimeListener(createdTime -> {
             tvDate.setText(AppUtil.getDateTimeStringFromMillisecond(createdTime));
-            AddItemActivity.this.createdTime = createdTime;
+            itemCreatedTime = createdTime;
         });
         datePicker.show(getSupportFragmentManager(), CustomDatePicker.class.getSimpleName());
     }
@@ -369,6 +370,7 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
         etDetail.setText("");
         tvDate.setText("");
         etValue.requestFocus();
+        itemCreatedTime = -1;
     }
 
     @Nullable
@@ -381,8 +383,8 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
         }
         if (value > 0) {
             String detail = etDetail.getText().toString().trim();
-            if (createdTime == -1) {
-                createdTime = System.currentTimeMillis();
+            if (itemCreatedTime == -1) {
+                itemCreatedTime = System.currentTimeMillis();
             }
 
             Item item = new Item();
@@ -394,7 +396,7 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
             item.setValue(value);
             item.setDetail(detail);
             item.setItemType(itemType);
-            item.setCreatedAt(createdTime);
+            item.setCreatedAt(itemCreatedTime);
             return item;
         } else {
             Toast.makeText(application, getString(R.string.invalid_value), Toast.LENGTH_SHORT).show();
@@ -411,16 +413,10 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
 
     @Override
     public void showLoading() {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(getString(R.string.saving));
-        progressDialog.show();
     }
 
     @Override
     public void hideLoading() {
-        if (progressDialog != null) {
-            progressDialog.cancel();
-        }
     }
 
     @Override
@@ -447,12 +443,10 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
     }
 
     private void callHideLoadingWithDelay() {
-        new Handler().postDelayed(() -> {
-            hideLoading();
-            if (!addMore) {
-                finish();
-            }
-        }, 500);
+        hideLoading();
+        if (!addMore) {
+            finish();
+        }
     }
 
     @Override

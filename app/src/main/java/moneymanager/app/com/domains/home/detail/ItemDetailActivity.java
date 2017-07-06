@@ -33,6 +33,7 @@ import static moneymanager.app.com.util.Constants.EDIT_ITEM_REQUEST;
 import static moneymanager.app.com.util.Constants.EDIT_ITEM_RESULT;
 import static moneymanager.app.com.util.Constants.IS_EDIT_ITEM;
 import static moneymanager.app.com.util.Constants.ITEM_CATEGORY;
+import static moneymanager.app.com.util.Constants.ITEM_CREATED_TIME;
 import static moneymanager.app.com.util.Constants.ITEM_DATE;
 import static moneymanager.app.com.util.Constants.ITEM_DETAIL;
 import static moneymanager.app.com.util.Constants.ITEM_ID;
@@ -82,6 +83,9 @@ public class ItemDetailActivity extends BaseActivity<ItemDetailView, ItemDetailP
 
     @Extra(ITEM_TYPE)
     String itemType;
+
+    @Extra(ITEM_CREATED_TIME)
+    long itemCreatedTime;
 
     @Extra(ITEM_ID)
     String itemId;
@@ -163,6 +167,7 @@ public class ItemDetailActivity extends BaseActivity<ItemDetailView, ItemDetailP
                 .extra(ITEM_TYPE, itemType)
                 .extra(IS_EDIT_ITEM, true)
                 .extra(ITEM_ID, itemId)
+                .extra(ITEM_CREATED_TIME, itemCreatedTime)
                 .extra(ITEM_VALUE, itemValue)
                 .extra(ITEM_CATEGORY, itemCategory)
                 .extra(ITEM_DETAIL, itemDetail)

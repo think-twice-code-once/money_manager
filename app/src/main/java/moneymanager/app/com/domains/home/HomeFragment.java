@@ -27,6 +27,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import moneymanager.app.com.R;
+import moneymanager.app.com.domains.BaseActivity;
 import moneymanager.app.com.domains.home.add_item.AddItemActivity_;
 import moneymanager.app.com.domains.home.add_item.CustomDatePicker;
 import moneymanager.app.com.factory.MainApplication;
@@ -103,6 +104,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @AfterViews
     void init() {
+        ((BaseActivity)getActivity()).changeActionBarAndStatusBarColor(ItemType.INCOME.toString());
+
         getHistoryList();
 
         presenter.initDefaultCategories();

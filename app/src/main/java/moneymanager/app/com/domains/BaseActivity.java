@@ -12,7 +12,6 @@ import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.OptionsItem;
 
 import moneymanager.app.com.R;
 import moneymanager.app.com.models.ItemType;
@@ -54,10 +53,5 @@ public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>>
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(currentView.getWindowToken(), 0);
 
-    }
-
-    @OptionsItem(android.R.id.home)
-    public void clickBackNavigation() {
-        onBackPressed();
     }
 }

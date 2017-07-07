@@ -22,13 +22,13 @@ import moneymanager.app.com.models.ItemType;
  * -> Created by phong.nguyen@beesightsoft.com on 6/28/2017.
  */
 
-public class CategoryAdapter extends ArrayAdapter<Category> {
+public class SuggestCategoryAdapter extends ArrayAdapter<Category> {
 
     private Context context;
     private int resItem;
     private List<Category> categories;
 
-    public CategoryAdapter(@NonNull Context context, @LayoutRes int resItem, List<Category> categories) {
+    public SuggestCategoryAdapter(@NonNull Context context, @LayoutRes int resItem, List<Category> categories) {
         super(context, resItem);
         this.context = context;
         this.resItem = resItem;
@@ -45,9 +45,9 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
             convertView = layoutInflater.inflate(resItem, parent, false);
 
             categoryViewHolder.tvCategoryContent = (TextView) convertView
-                    .findViewById(R.id.item_category_tv_category_content);
+                    .findViewById(R.id.item_suggest_category_tv_category_content);
             categoryViewHolder.vMarginStart = convertView
-                    .findViewById(R.id.item_category_v_margin_start);
+                    .findViewById(R.id.item_suggest_category_v_margin_start);
 
             convertView.setTag(categoryViewHolder);
         } else {

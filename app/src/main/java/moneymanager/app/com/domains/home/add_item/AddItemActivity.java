@@ -29,6 +29,7 @@ import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -268,8 +269,9 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
 
     private void handleShowingCategories(List<Category> categories) {
         if (categories != null) {
-            CategoryAdapter categoryAdapter = new CategoryAdapter(this, R.layout.item_category, categories);
-            actvCategory.setAdapter(categoryAdapter);
+            SuggestCategoryAdapter suggestCategoryAdapter = new SuggestCategoryAdapter(
+                    this, R.layout.item_suggest_category, categories);
+            actvCategory.setAdapter(suggestCategoryAdapter);
             actvCategory.setText(itemCategory);
             actvCategory.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -475,5 +477,10 @@ public class AddItemActivity extends BaseActivity<AddItemView, AddItemPresenter>
                 error.getView().requestFocus();
             }
         }
+    }
+
+    @OptionsItem(android.R.id.home)
+    public void clickBackNavigation() {
+        onBackPressed();
     }
 }

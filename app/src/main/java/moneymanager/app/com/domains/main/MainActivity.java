@@ -3,11 +3,11 @@ package moneymanager.app.com.domains.main;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import moneymanager.app.com.R;
+import moneymanager.app.com.domains.BaseActivity;
 import moneymanager.app.com.domains.about.AboutFragment_;
 import moneymanager.app.com.domains.category.CategoryFragment_;
 import moneymanager.app.com.domains.home.HomeFragment_;
@@ -29,7 +30,7 @@ import moneymanager.app.com.domains.report.ReportFragment_;
 import moneymanager.app.com.domains.strategy.StrategyFragment_;
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity<MainView, MainPresenter> implements MainView {
 
     @ViewById(R.id.activity_main_dl_root)
     DrawerLayout dlRoot;
@@ -151,5 +152,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         actionBarDrawerToggle.syncState();
+    }
+
+    @NonNull
+    @Override
+    public MainPresenter createPresenter() {
+        return new MainPresenter();
     }
 }

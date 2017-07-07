@@ -18,6 +18,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OnActivityResult;
+import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
 
 import javax.inject.Inject;
@@ -216,5 +217,10 @@ public class ItemDetailActivity extends BaseActivity<ItemDetailView, ItemDetailP
     @Override
     public void deleteItemFailed(Throwable throwable) {
         Toast.makeText(application, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @OptionsItem(android.R.id.home)
+    public void clickBackNavigation() {
+        onBackPressed();
     }
 }

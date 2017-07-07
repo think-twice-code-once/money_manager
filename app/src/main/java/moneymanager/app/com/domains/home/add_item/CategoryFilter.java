@@ -15,11 +15,11 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class CategoryFilter extends Filter {
 
-    private CategoryAdapter categoryAdapter;
+    private SuggestCategoryAdapter suggestCategoryAdapter;
     private List<Category> originalCategories;
 
-    public CategoryFilter(CategoryAdapter categoryAdapter, List<Category> originalCategories) {
-        this.categoryAdapter = categoryAdapter;
+    public CategoryFilter(SuggestCategoryAdapter suggestCategoryAdapter, List<Category> originalCategories) {
+        this.suggestCategoryAdapter = suggestCategoryAdapter;
         this.originalCategories = originalCategories;
     }
 
@@ -58,9 +58,9 @@ public class CategoryFilter extends Filter {
     @Override
     protected void publishResults(CharSequence constraint, FilterResults results) {
         if (results.values instanceof List) {
-            categoryAdapter.clear();
-            categoryAdapter.addAll((List) results.values);
-            categoryAdapter.notifyDataSetChanged();
+            suggestCategoryAdapter.clear();
+            suggestCategoryAdapter.addAll((List) results.values);
+            suggestCategoryAdapter.notifyDataSetChanged();
         }
     }
 }

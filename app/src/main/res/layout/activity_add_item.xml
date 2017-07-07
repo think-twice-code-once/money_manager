@@ -96,6 +96,7 @@
                 android:layout_gravity="bottom"/>
 
             <LinearLayout
+                android:id="@+id/activity_add_item_ll_anchor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -119,7 +120,7 @@
                     android:textColorHint="@color/grey_2"
                     android:completionThreshold="1"
                     android:imeOptions="actionNext"
-                    android:dropDownAnchor="@+id/activity_add_item_fl_category_separator"
+                    android:dropDownAnchor="@+id/activity_add_item_ll_anchor"
                     android:nextFocusDown="@+id/activity_add_item_et_detail"/>
 
                 <FrameLayout

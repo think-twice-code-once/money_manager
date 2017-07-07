@@ -1,22 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal">
-
-    <View
-        android:id="@+id/item_suggest_category_v_margin_start"
-        android:layout_width="25dp"
-        android:layout_height="1dp"
-        android:visibility="gone"/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/item_suggest_category_tv_category_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/item_suggest_category_fl_end"
         android:padding="10dp"
         android:text="@string/category"
-        android:textColor="@color/orange"
+        android:textColor="@color/colorPrimary"
         android:textSize="15sp"/>
 
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/item_suggest_category_fl_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:id="@+id/item_suggest_category_iv_cate_parent"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:src="@drawable/ic_parent_cate_green"
+            android:visibility="gone"
+            tools:ignore="ContentDescription"/>
+
+        <ImageView
+            android:id="@+id/item_suggest_category_iv_cate_child"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_child_cate_green"
+            tools:ignore="ContentDescription"/>
+
+
+    </FrameLayout>
+
+</RelativeLayout>

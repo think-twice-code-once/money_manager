@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -46,8 +47,10 @@ public class SuggestCategoryAdapter extends ArrayAdapter<Category> {
 
             categoryViewHolder.tvCategoryContent = (TextView) convertView
                     .findViewById(R.id.item_suggest_category_tv_category_content);
-            categoryViewHolder.vMarginStart = convertView
-                    .findViewById(R.id.item_suggest_category_v_margin_start);
+            categoryViewHolder.ivCategoryParent = (ImageView) convertView
+                    .findViewById(R.id.item_suggest_category_iv_cate_parent);
+            categoryViewHolder.ivCategoryChild = (ImageView) convertView
+                    .findViewById(R.id.item_suggest_category_iv_cate_child);
 
             convertView.setTag(categoryViewHolder);
         } else {
@@ -57,10 +60,26 @@ public class SuggestCategoryAdapter extends ArrayAdapter<Category> {
         Category category = getItem(position);
         if (category != null) {
             categoryViewHolder.tvCategoryContent.setText(category.getContent());
+            boolean isPaymentType = ItemType.PAYMENT.toString().equals(category.getType());
             categoryViewHolder.tvCategoryContent.setTextColor(ContextCompat.getColor(context,
-                    ItemType.INCOME.toString().equals(category.getType()) ? R.color.colorPrimary : R.color.orange));
-//            categoryViewHolder.vMarginStart.setVisibility(
-//                    !TextUtils.isEmpty(category.getParentId()) ? View.VISIBLE : GONE);
+                    isPaymentType ? R.color.orange : R.color.colorPrimary));
+            if (category.getParentId() == null ) {
+                categoryViewHolder.ivCategoryParent.setVisibility(View.VISIBLE);
+                categoryViewHolder.ivCategoryChild.setVisibility(View.GONE);
+               if (isPaymentType) {
+                   categoryViewHolder.ivCategoryParent.setImageResource(R.drawable.ic_parent_cate_orange);
+               } else {
+                   categoryViewHolder.ivCategoryParent.setImageResource(R.drawable.ic_parent_cate_green);
+               }
+            } else {
+                categoryViewHolder.ivCategoryChild.setVisibility(View.VISIBLE);
+                categoryViewHolder.ivCategoryParent.setVisibility(View.GONE);
+                if (isPaymentType) {
+                    categoryViewHolder.ivCategoryChild.setImageResource(R.drawable.ic_child_cate_orange);
+                } else {
+                    categoryViewHolder.ivCategoryChild.setImageResource(R.drawable.ic_child_cate_green);
+                }
+            }
         }
 
         return convertView;
@@ -74,6 +93,7 @@ public class SuggestCategoryAdapter extends ArrayAdapter<Category> {
 
     private static class CategoryViewHolder {
         TextView tvCategoryContent;
-        View vMarginStart;
+        ImageView ivCategoryParent;
+        ImageView ivCategoryChild;
     }
 }

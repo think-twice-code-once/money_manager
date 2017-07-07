@@ -117,10 +117,10 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         tvCategory.setText(categoryChild.getContent());
         if (ItemType.PAYMENT.toString().equals(categoryChild.getType())) {
             tvCategory.setTextColor(ContextCompat.getColor(context, R.color.orange));
-            ivCategoryType.setImageResource(R.drawable.ic_parent_cate_orange);
+            ivCategoryType.setImageResource(R.drawable.ic_child_cate_orange);
         } else {
             tvCategory.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
-            ivCategoryType.setImageResource(R.drawable.ic_parent_cate_green);
+            ivCategoryType.setImageResource(R.drawable.ic_child_cate_green);
         }
 
         return childCategoryView;

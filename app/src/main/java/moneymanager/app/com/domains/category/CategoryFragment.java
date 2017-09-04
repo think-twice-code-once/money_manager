@@ -84,6 +84,10 @@ public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresente
     @AfterViews
     void init() {
         initBasicUi();
+
+        elvCategories.setOnItemLongClickListener((parent, view, position, id) -> {
+            return true;
+        });
     }
 
     private void initBasicUi() {

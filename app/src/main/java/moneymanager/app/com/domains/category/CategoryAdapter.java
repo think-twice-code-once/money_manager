@@ -123,6 +123,10 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
             ivCategoryType.setImageResource(R.drawable.ic_child_cate_green);
         }
 
+        childCategoryView.setOnLongClickListener(v -> {
+            return true;
+        });
+
         return childCategoryView;
     }
 

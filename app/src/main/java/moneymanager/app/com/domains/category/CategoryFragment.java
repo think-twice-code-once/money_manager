@@ -27,6 +27,7 @@ import javax.inject.Inject;
 
 import moneymanager.app.com.R;
 import moneymanager.app.com.domains.BaseActivity;
+import moneymanager.app.com.domains.category.add_category.AddCategoryActivity_;
 import moneymanager.app.com.factory.MainApplication;
 import moneymanager.app.com.models.Category;
 import moneymanager.app.com.models.ItemType;
@@ -64,8 +65,6 @@ public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresente
     private List<Category> parentCategories;
     private Map<String, List<Category>> childCategories;
     private ItemType itemType;
-
-
 
     @NonNull
     @Override
@@ -110,7 +109,7 @@ public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresente
 
     @Click(R.id.fragment_category_fab_add)
     void clickAdd() {
-
+        AddCategoryActivity_.intent(this).start();
     }
 
     @Override

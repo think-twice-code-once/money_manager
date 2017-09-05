@@ -83,6 +83,12 @@ public class CategoryFragment extends MvpFragment<CategoryView, CategoryPresente
     @AfterViews
     void init() {
         initBasicUi();
+
+        elvCategories.setOnItemLongClickListener((parent, view, position, id) -> {
+            OptionsDialog optionsDialog = new OptionsDialog_();
+            optionsDialog.show(getFragmentManager(), OptionsDialog.class.getSimpleName());
+            return true;
+        });
     }
 
     private void initBasicUi() {
